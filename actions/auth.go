@@ -1,14 +1,21 @@
 package actions
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
 
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/pop"
+	"github.com/gobuffalo/uuid"
+	"github.com/gobuffalo/validate"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
 	"github.com/markbates/goth/providers/cloudfoundry"
+	"github.com/pkg/errors"
+
+	"github.com/hyeoncheon/skel/models"
 )
 
 func init() {
@@ -29,10 +36,71 @@ func init() {
 }
 
 func AuthCallback(c buffalo.Context) error {
-	user, err := gothic.CompleteUserAuth(c.Response(), c.Request())
+	oau, err := gothic.CompleteUserAuth(c.Response(), c.Request())
 	if err != nil {
 		return c.Error(http.StatusUnauthorized, err)
 	}
-	// Do something with the user, maybe register them/sign them in
-	return c.Render(http.StatusOK, r.JSON(user))
+	c.Logger().Infof("attempt to login: %v/%v", oau.UserID, oau.Email)
+
+	if err := validateUARTUser(&oau); err != nil {
+		joau, _ := json.Marshal(oau)
+		c.Logger().Warnf("invalid uart user: %v (%v)", err, string(joau))
+		c.Flash().Add("danger", err.Error())
+		return c.Redirect(http.StatusTemporaryRedirect, "/")
+	}
+
+	user, err := setUser(c, &oau)
+	if err != nil {
+		c.Logger().Warnf("could not set user: %v", err)
+		c.Flash().Add("danger", err.Error())
+		return c.Redirect(http.StatusTemporaryRedirect, "/")
+	}
+
+	c.Logger().Infof("user %v logged in", user)
+
+	c.Flash().Add("success", "welcome.logged.in.successfully")
+	return c.Redirect(http.StatusTemporaryRedirect, "/")
+}
+
+func validateUARTUser(oau *goth.User) error {
+	roles, ok := oau.RawData["roles"].([]interface{})
+	if !ok || len(roles) < 0 {
+		return errors.New("invalid.user..you.have.no.access.permission")
+	}
+	return nil
+}
+
+// setUser creates or updates user in database, and returns user.
+func setUser(c buffalo.Context, oau *goth.User) (*models.User, error) {
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		c.Logger().Error("system error: no transaction found")
+		return &models.User{}, errors.New("internal.error..no.transaction")
+	}
+
+	var verrs *validate.Errors
+	user := &models.User{Email: oau.Email}
+	err := tx.Find(user, oau.UserID)
+	if err == nil {
+		verrs, err = tx.ValidateAndUpdate(user)
+	} else {
+		user.ID, _ = uuid.FromString(oau.UserID)
+		verrs, err = tx.ValidateAndCreate(user)
+	}
+	if err != nil {
+		return &models.User{}, err
+	}
+	if verrs.HasAny() {
+		return &models.User{}, errors.New("invalid.user..validation.failed")
+	}
+
+	// name, avatar icon, and roles are not stored on database.
+	user.Name = oau.Name
+	user.Avatar = oau.RawData["picture"].(string)
+	for _, v := range oau.RawData["roles"].([]interface{}) {
+		if r, ok := v.(string); ok {
+			user.Roles = append(user.Roles, r)
+		}
+	}
+	return user, nil
 }

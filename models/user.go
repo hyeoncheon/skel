@@ -2,6 +2,8 @@ package models
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"time"
 
 	"github.com/gobuffalo/pop"
@@ -17,12 +19,12 @@ type User struct {
 	Email     string    `json:"email" db:"email"`
 	Name      string    `json:"name" db:"-"`
 	Avatar    string    `json:"avatar" db:"-"`
-	Roles     string    `json:"roles" db:"-"`
+	Roles     []string  `json:"roles" db:"-"`
 }
 
 // String represents user as string (currently returns email address)
 func (u User) String() string {
-	return u.Email
+	return fmt.Sprintf("%s (%s)", u.Email, u.ID.String()[0:6])
 }
 
 // Users is an array of users
@@ -36,7 +38,14 @@ func (u Users) String() string {
 
 // Validate gets run every time you call a "pop.Validate*"
 func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
+	if u.Email == "" {
+		return nil, errors.New("invalid.user..email.is.not.provided")
+	}
+	if u.ID == uuid.Nil {
+		return nil, errors.New("invalid.user..invalid.user.id")
+	}
 	return validate.Validate(
+		&validators.UUIDIsPresent{Field: u.ID, Name: "ID"},
 		&validators.StringIsPresent{Field: u.Email, Name: "Email"},
 	), nil
 }
