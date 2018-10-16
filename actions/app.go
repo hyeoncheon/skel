@@ -66,6 +66,8 @@ func App() *buffalo.App {
 		authHandler := buffalo.WrapHandlerFunc(gothic.BeginAuthHandler)
 		auth.GET("/{provider}", authHandler)
 		auth.GET("/{provider}/callback", AuthCallback)
+
+		app.Resource("/users", UsersResource{})
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 
