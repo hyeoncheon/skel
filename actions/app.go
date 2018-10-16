@@ -2,15 +2,16 @@ package actions
 
 import (
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/buffalo-pop/pop/popmw"
 	"github.com/gobuffalo/envy"
+	csrf "github.com/gobuffalo/mw-csrf"
 	forcessl "github.com/gobuffalo/mw-forcessl"
+	i18n "github.com/gobuffalo/mw-i18n"
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
+	"github.com/gobuffalo/packr"
+	"github.com/markbates/goth/gothic"
 	"github.com/unrolled/secure"
 
-	"github.com/gobuffalo/buffalo-pop/pop/popmw"
-	csrf "github.com/gobuffalo/mw-csrf"
-	i18n "github.com/gobuffalo/mw-i18n"
-	"github.com/gobuffalo/packr"
 	"github.com/hyeoncheon/skel/models"
 )
 
@@ -60,6 +61,11 @@ func App() *buffalo.App {
 
 		app.GET("/", HomeHandler)
 
+		// authorization with uart
+		auth := app.Group("/auth")
+		authHandler := buffalo.WrapHandlerFunc(gothic.BeginAuthHandler)
+		auth.GET("/{provider}", authHandler)
+		auth.GET("/{provider}/callback", AuthCallback)
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 
