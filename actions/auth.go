@@ -56,6 +56,8 @@ func AuthCallback(c buffalo.Context) error {
 		return c.Redirect(http.StatusTemporaryRedirect, "/")
 	}
 
+	makeSession(c, user)
+
 	c.Logger().Infof("user %v logged in", user)
 
 	c.Flash().Add("success", "welcome.logged.in.successfully")
@@ -103,4 +105,19 @@ func setUser(c buffalo.Context, oau *goth.User) (*models.User, error) {
 		}
 	}
 	return user, nil
+}
+
+func makeSession(c buffalo.Context, user *models.User) error {
+	sess := c.Session()
+	sess.Set("user_id", user.ID)
+	sess.Set("user_mail", user.Email)
+	sess.Set("user_name", user.Name)
+	sess.Set("user_icon", user.Avatar)
+	sess.Set("user_roles", user.Roles)
+	return sess.Save()
+}
+
+func destroySession(c buffalo.Context) error {
+	c.Session().Clear()
+	return nil
 }
