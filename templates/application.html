@@ -1,21 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <title>Buffalo - Skel</title>
-    <%= stylesheetTag("application.css") %>
-    <meta name="csrf-param" content="authenticity_token" />
-    <meta name="csrf-token" content="<%= authenticity_token %>" />
-    <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
-  </head>
-  <body>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title><%= t("Honcheonui") %></title>
+		<%= stylesheetTag("application.css") %>
+		<%= stylesheetTag("override.css") %>
+		<meta name="csrf-param" content="authenticity_token" />
+		<meta name="csrf-token" content="<%= authenticity_token %>" />
+		<link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
+		<%= javascriptTag("application.js") %>
+	</head>
+	<body>
 
-    <div class="container">
-      <%= partial("flash.html") %>
-      <%= yield %>
-    </div>
+	<!-- ---- layout: title-bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+		<a class="navbar-brand" href="/"><%= t("Honcheonui") %></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav"
+			aria-controls="navbarNav"
+			aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button><%= if (user_id) { %>
 
-    <%= javascriptTag("application.js") %>
-  </body>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<div class="navbar-nav mr-auto flex-grow-1">
+				<a class="nav-item nav-link active" href="/">Home</a>
+				<a class="nav-item nav-link" href="/link">Link</a>
+				<div class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						role="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						Dropdown
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</div>
+			</div>
+			<div class="navbar-nav mr-auto">
+				<div class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						role="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						<img src="<%= user_icon %>"
+						class="cust-img-profile img-circle"></a>
+					<div class="dropdown-menu dropdown-menu-right"
+						aria-labelledby="navbarDropdown">
+						<span class="dropdown-item-text"><%= user_name %></span>
+						<span class="dropdown-item-text">ID:<%= user_id %></span>
+						<a class="dropdown-item" href="/profile"><%= t("Profile") %></a>
+						<a class="dropdown-item" href="/settings"><%= t("Settings") %></a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/logout"><%= t("Logout") %></a>
+					</div>
+				</div>
+			</div>
+		</div><% } %>
+	</nav>
+
+	<!-- ---- layout: side-bar and content -->
+	<div class="lay-outter-container">
+		<div class="lay-inner-container">
+			<div class="content">
+<%= partial("flash.html") %>
+<%= yield %>
+			</div>
+		</div>
+	</div>
+	</body>
 </html>

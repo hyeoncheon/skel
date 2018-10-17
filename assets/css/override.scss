@@ -1,0 +1,97 @@
+//* css for hyeoncheon project rebooted.
+//*
+
+@import url('//cdn.jsdelivr.net/nanumsquare/1.0/nanumsquare.css');
+@import url('//fonts.googleapis.com/earlyaccess/notosanskr.css');
+@import url('//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800');
+
+$font-base: 'Open Sans','Noto Sans KR','Helvetica Neue',sans-serif;
+$font-head: 'Open Sans','NanumSquare','Helvetica Neue',sans-serif;
+$font-type: Monaco, "Ubuntu Mono", "Courier New", monospace !important;
+
+$font-size: 16px;
+$nav-height: 40px;
+$nav-icon-size: 32px;
+
+$color-nav: black;
+
+
+//* mixins
+.mixin-strong { font-weight: 600; }
+.mixin-green { color: green; }
+.mixin-red { color: red; }
+.mixin-orange { color: orange; }
+.mixin-small { font-size: $font-size - 2px; }
+
+
+//* layout and basic elements
+html, body {
+	height: 100%;
+	font-family: $font-base;
+	font-size: $font-size;
+}
+body {
+	font-size: $font-size !important;
+}
+
+.lay-outter-container {
+	width: 100%;
+	height: 100%;
+	display: table;
+	margin: -40px 0 0;
+	padding: 40px 0 0;
+	.lay-inner-container {
+		height: 100%;
+		.content {
+		}
+	}
+}
+
+
+//* custom widgets
+.cust-img-profile {
+	width: $nav-icon-size;
+	border-radius: $nav-icon-size / 3;
+}
+
+.overlay-flash {
+	position: fixed;
+	right: 25px;
+	top: 55px;
+	width: 600px;
+	z-index: 999;
+	opacity: 0.95;
+	.alert {
+		position: relative;
+		margin-bottom: 10px;
+		padding: 10px 15px;
+		clear: both;
+		float: right;
+		box-shadow: 2px 2px 2px rgba(100,100,100, 0.5);
+		border-width: 0 0 0 3px;
+		border-radius: 0;
+		border-style: solid;
+		.close {
+			margin-left: 10px;
+		}
+	}
+}
+
+
+//* override default styles of bootstrap
+.navbar {
+	background-color: $color-nav !important;
+	padding: 0 1rem;
+	* {
+		line-height: 1em;
+	}
+	.navbar-brand {
+		padding: ($nav-height - $font-size * 1.25) / 2 0;
+	}
+	.nav-link {
+		padding: ($nav-height - $font-size - 2) / 2 0;
+		img {
+			margin: ($font-size - $nav-icon-size) / 2 0;
+		}
+	}
+}
