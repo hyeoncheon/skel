@@ -66,7 +66,7 @@ func AuthCallback(c buffalo.Context) error {
 
 func validateUARTUser(oau *goth.User) error {
 	roles, ok := oau.RawData["roles"].([]interface{})
-	if !ok || len(roles) < 0 {
+	if !ok || len(roles) < 1 {
 		return errors.New("Invalid user: You have no access permission")
 	}
 	return nil

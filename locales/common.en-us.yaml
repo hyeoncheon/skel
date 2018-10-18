@@ -201,10 +201,16 @@
   translation: Type
 - id: Update
   translation: Update
+- id: User
+  translation: User
+- id: Users
+  translation: Users
 - id: User id
   translation: User ID
 - id: Value
   translation: Value
+- id: View
+  translation: View
 
 # built in error message of buffalo
 - id: no transaction found

@@ -34,6 +34,19 @@ func (u *User) IsValid() bool {
 	return true
 }
 
+func (u *User) IsAdmin() bool {
+	return u.HasRole("admin")
+}
+
+func (u *User) HasRole(role string) bool {
+	for _, r := range u.Roles {
+		if r == role {
+			return true
+		}
+	}
+	return false
+}
+
 //*** users ---
 
 // Users is an array of users

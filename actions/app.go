@@ -68,13 +68,15 @@ func App() *buffalo.App {
 		auth.GET("/{provider}", authHandler)
 		auth.GET("/{provider}/callback", AuthCallback)
 
-		app.Use(AuthorizeHandler)
-		app.Middleware.Skip(AuthorizeHandler, HomeHandler)
-		app.Use(contextHandler)
+		app.Use(authorizeKeeper)
+		app.Middleware.Skip(authorizeKeeper, HomeHandler)
+		app.Use(contextMapper)
 
 		app.GET("/profile", ProfileShow)
 
-		app.Resource("/users", UsersResource{})
+		u := app.Resource("/users", UsersResource{})
+		u.Use(adminKeeper)
+
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 

@@ -14,9 +14,11 @@ $nav-height: 40px;
 $nav-icon-size: 32px;
 
 $color-nav: black;
+$color-hover: #555;
 $color-header: #f4f4f4;
 $color-border: #ccc;
 $color-gray: #999;
+$color-white: white;
 
 
 //* mixins
@@ -115,7 +117,7 @@ h4, h5, h6 {
 //* override default styles of bootstrap
 .navbar {
 	background-color: $color-nav !important;
-	padding: 0 1rem;
+	padding: 0 0.5rem;
 	* {
 		line-height: 1em;
 	}
@@ -123,9 +125,26 @@ h4, h5, h6 {
 		padding: ($nav-height - $font-size * 1.25) / 2 0;
 	}
 	.nav-link {
-		padding: ($nav-height - $font-size - 2) / 2 0;
+		padding: 0;
+	}
+	.nav-item {
+		padding: ($nav-height - $font-size - 2) / 2 0.5rem !important;
+		&:last-child {
+			padding-right: 0 !important;
+		}
 		img {
 			margin: ($font-size - $nav-icon-size) / 2 0;
+		}
+	}
+	.dropdown-item {
+		padding: 0.5rem 1.5rem;
+		&.active {
+			color: $color-white;
+			background: $color-nav;
+		}
+		&:hover {
+			color: $color-white;
+			background: $color-hover;
 		}
 	}
 }
