@@ -6,8 +6,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 )
 
-// HomeHandler is a default handler to serve up
-// a home page.
+// HomeHandler is a default handler to serve up a home page.
 func HomeHandler(c buffalo.Context) error {
 	if getCurrentUser(c).IsValid() {
 		return c.Redirect(http.StatusTemporaryRedirect, "profilePath()")
