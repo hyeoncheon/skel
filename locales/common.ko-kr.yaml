@@ -5,13 +5,13 @@
 - id: Logout
   translation: 로그아웃
 - id: Login required
-  translation: 로그인해야 합니다.
+  translation: 로그인이 필요해서...
 - id: Staff only
-  translation: 담당자만 접근할 수 있습니다!
+  translation: 무슨 짓이오!
 - id: Welcome back! I missed you
-  translation: 반갑습니다! 기다리고 있었어요
+  translation: 반갑소! 기다리고 있었소
 - id: You have been successfully logged out
-  translation: 정상적으로 로그아웃 되었습니다
+  translation: 잘가시오
 
 # Related to Models
 - id: Created at
@@ -23,11 +23,11 @@
 
 # Common dialog messages
 - id: Are you sure?
-  translation: 확실합니까? 이 동작은 되돌릴 수 없습니다!
+  translation: 확실하오? 이 동작은 되돌릴 수가 없소!
 - id: You dont have permission
-  translation: 이 작업을 진행할 권한이 없습니다!
+  translation: 무슨~ 권한으로 이러는 것이오! 허!
 - id: Oops! Manipulated request
-  translation: 이런! 변조된 접근이군요! 누구시죠?
+  translation: 이런! 변조된 접근이로구려! 누구시오?
 
 # Common error messages related to UART
 - id: "Internal error: No transaction"
@@ -40,6 +40,12 @@
   translation: "비인가 사용자: 잘못된 사용자 ID 입니다"
 - id: "Invalid user: You have no access permission"
   translation: "비인가 사용자: 권한이 없습니다"
+
+# Common UI messages
+- id: visit.uart.to.manage.your.details
+  translation: 세부사항을 관리하려거든 UART에 가 보시오
+- id: your.information.and.activities
+  translation: 귀하에 대한 정보와 귀하의 활동들
 
 # Common words
 - id: Accept
@@ -106,6 +112,14 @@
   translation: Event
 - id: Events
   translation: Events
+- id: ID
+  translation: ID
+- id: IDs
+  translation: IDs
+- id: Mail
+  translation: Mail
+- id: Mails
+  translation: Mails
 - id: Member
   translation: Member
 - id: Members

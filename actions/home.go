@@ -9,7 +9,10 @@ import (
 // HomeHandler is a default handler to serve up
 // a home page.
 func HomeHandler(c buffalo.Context) error {
-	return c.Render(200, r.HTML("index.html"))
+	if getCurrentUser(c).IsValid() {
+		return c.Redirect(http.StatusTemporaryRedirect, "profilePath()")
+	}
+	return c.Render(http.StatusOK, r.HTML("index.html"))
 }
 
 func LogoutHandler(c buffalo.Context) error {

@@ -41,6 +41,11 @@
 - id: "Invalid user: You have no access permission"
   translation: "Invalid user: You have no access permission"
 
+- id: visit.uart.to.manage.your.details
+  translation: Visit UART to manage your details
+- id: your.information.and.activities
+  translation: Your information and activities
+
 # Common words
 - id: Accept
   translation: Accept
@@ -106,6 +111,14 @@
   translation: Event
 - id: Events
   translation: Events
+- id: ID
+  translation: ID
+- id: IDs
+  translation: IDs
+- id: Mail
+  translation: Mail
+- id: Mails
+  translation: Mails
 - id: Member
   translation: Member
 - id: Members

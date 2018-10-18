@@ -1,0 +1,26 @@
+<div class="page-header col-12">
+	<h1><%= t("Profile") %></h1>
+	<div class="pull-right">
+		<span data-toggle="popover" data-trigger="hover" data-placement="left"
+			data-content="<%=t("visit.uart.to.manage.your.details") %>">
+			<i class="fa fa-question-circle"></i>
+		</span>
+	</div>
+	<div class="description"><%= t("your.information.and.activities") %></div>
+</div>
+
+<div class="page-content col-12">
+	<div class="row">
+		<div class="col-2 mixin-strong"><%= t("ID")
+			%></div><div class="col-10"><%= user_id %></div>
+		<div class="col-2 mixin-strong"><%= t("Mail")
+			%></div><div class="col-10"><%= user_mail %></div>
+		<div class="col-2 mixin-strong"><%= t("Name")
+			%></div><div class="col-10"><%= user_name %></div>
+		<div class="col-2 mixin-strong"><%= t("Roles")
+			%></div><div class="col-10"><%= user_roles %></div>
+	</div>
+</div>
+
+<div class="page-footer col-12">
+</div>

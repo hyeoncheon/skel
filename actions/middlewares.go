@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/uuid"
 )
 
 func AuthorizeHandler(next buffalo.Handler) buffalo.Handler {
@@ -21,13 +20,13 @@ func AuthorizeHandler(next buffalo.Handler) buffalo.Handler {
 func contextHandler(next buffalo.Handler) buffalo.Handler {
 	return func(c buffalo.Context) error {
 		if userID := c.Session().Get("user_id"); userID != nil {
-			if id, ok := userID.(uuid.UUID); ok {
-				c.Set("user_id", id)
-			}
-			c.Set("user_mail", c.Session().Get("user_mail"))
-			c.Set("user_name", c.Session().Get("user_name"))
-			c.Set("user_icon", c.Session().Get("user_icon"))
-			c.Set("user_roles", c.Session().Get("user_roles"))
+			user := getCurrentUser(c)
+			c.Set("current_user", user)
+			c.Set("user_id", user.ID)
+			c.Set("user_mail", user.Email)
+			c.Set("user_name", user.Name)
+			c.Set("user_icon", user.Avatar)
+			c.Set("user_roles", user.Roles)
 		}
 		return next(c)
 	}

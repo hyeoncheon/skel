@@ -72,6 +72,8 @@ func App() *buffalo.App {
 		app.Middleware.Skip(AuthorizeHandler, HomeHandler)
 		app.Use(contextHandler)
 
+		app.GET("/profile", ProfileShow)
+
 		app.Resource("/users", UsersResource{})
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}

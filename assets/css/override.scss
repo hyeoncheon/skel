@@ -14,6 +14,9 @@ $nav-height: 40px;
 $nav-icon-size: 32px;
 
 $color-nav: black;
+$color-header: #f4f4f4;
+$color-border: #ccc;
+$color-gray: #999;
 
 
 //* mixins
@@ -33,7 +36,22 @@ html, body {
 body {
 	font-size: $font-size !important;
 }
+h1 {
+	font-size: 2rem;
+}
+h2 {
+	font-size: 1.6rem;
+}
+h3 {
+	font-size: 1.4rem;
+}
+h4, h5, h6 {
+	font-size: 1rem;
+}
 
+.navbar {
+	box-shadow: 0 4px 8px rgba(100,100,100, 0.5);
+}
 .lay-outter-container {
 	width: 100%;
 	height: 100%;
@@ -43,6 +61,22 @@ body {
 	.lay-inner-container {
 		height: 100%;
 		.content {
+			.page-header {
+				background-color: $color-header;
+				border-bottom: 1px solid $color-border;
+				.description {
+					color: $color-gray;
+					padding-bottom: 0.2rem;
+					min-height: 1.5em;
+				}
+			}
+			.page-content {
+				padding-top: 0.4rem;
+				padding-bottom: 2rem;
+			}
+			.page-footer {
+				color: $color-gray;
+			}
 		}
 	}
 }

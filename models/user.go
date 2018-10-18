@@ -27,6 +27,15 @@ func (u User) String() string {
 	return fmt.Sprintf("%s (%s)", u.Email, u.ID.String()[0:6])
 }
 
+func (u *User) IsValid() bool {
+	if u.ID == uuid.Nil {
+		return false
+	}
+	return true
+}
+
+//*** users ---
+
 // Users is an array of users
 type Users []User
 
@@ -35,6 +44,8 @@ func (u Users) String() string {
 	ju, _ := json.Marshal(u)
 	return string(ju)
 }
+
+//*** validation functions ---
 
 // Validate gets run every time you call a "pop.Validate*"
 func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
