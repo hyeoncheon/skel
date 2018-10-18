@@ -91,6 +91,14 @@ func translations() buffalo.MiddlewareFunc {
 	return T.Middleware()
 }
 
+func t(c buffalo.Context, str string, args ...interface{}) string {
+	s := T.Translate(c, str, args...)
+	if s == str {
+		c.Logger().WithField("category", "i18n").Warnf("UNTRANSLATED: %v", str)
+	}
+	return s
+}
+
 // forceSSL will return a middleware that will redirect an incoming request
 // if it is not HTTPS. "http://example.com" => "https://example.com".
 // This middleware does **not** enable SSL. for your application. To do that

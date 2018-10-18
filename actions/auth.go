@@ -45,14 +45,14 @@ func AuthCallback(c buffalo.Context) error {
 	if err := validateUARTUser(&oau); err != nil {
 		joau, _ := json.Marshal(oau)
 		c.Logger().Warnf("invalid uart user: %v (%v)", err, string(joau))
-		c.Flash().Add("danger", err.Error())
+		c.Flash().Add("danger", t(c, err.Error()))
 		return c.Redirect(http.StatusTemporaryRedirect, "/")
 	}
 
 	user, err := setUser(c, &oau)
 	if err != nil {
 		c.Logger().Warnf("could not set user: %v", err)
-		c.Flash().Add("danger", err.Error())
+		c.Flash().Add("danger", t(c, err.Error()))
 		return c.Redirect(http.StatusTemporaryRedirect, "/")
 	}
 
@@ -60,14 +60,14 @@ func AuthCallback(c buffalo.Context) error {
 
 	c.Logger().Infof("user %v logged in", user)
 
-	c.Flash().Add("success", "welcome.logged.in.successfully")
+	c.Flash().Add("success", t(c, "Welcome back! I missed you"))
 	return c.Redirect(http.StatusTemporaryRedirect, "/")
 }
 
 func validateUARTUser(oau *goth.User) error {
 	roles, ok := oau.RawData["roles"].([]interface{})
 	if !ok || len(roles) < 0 {
-		return errors.New("invalid.user..you.have.no.access.permission")
+		return errors.New("Invalid user: You have no access permission")
 	}
 	return nil
 }
@@ -77,7 +77,7 @@ func setUser(c buffalo.Context, oau *goth.User) (*models.User, error) {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		c.Logger().Error("system error: no transaction found")
-		return &models.User{}, errors.New("internal.error..no.transaction")
+		return &models.User{}, errors.New("Internal error: No transaction")
 	}
 
 	var verrs *validate.Errors
@@ -93,7 +93,7 @@ func setUser(c buffalo.Context, oau *goth.User) (*models.User, error) {
 		return &models.User{}, err
 	}
 	if verrs.HasAny() {
-		return &models.User{}, errors.New("invalid.user..validation.failed")
+		return &models.User{}, errors.New("Internal error: Validation failed")
 	}
 
 	// name, avatar icon, and roles are not stored on database.

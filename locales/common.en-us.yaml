@@ -1,0 +1,198 @@
+
+# Login & Authentication
+- id: Login
+  translation: Login
+- id: Logout
+  translation: Logout
+- id: Login required
+  translation: Login required
+- id: Staff only
+  translation: Staff Only!
+- id: Welcome back! I missed you
+  translation: Welcome back! I missed you
+- id: You have been successfully logged out
+  translation: You have been successfully logged out
+
+# Related to Models
+- id: Created at
+  translation: Created at
+- id: Modified at
+  translation: Modified at
+- id: Updated at
+  translation: Updated at
+
+# Common dialog messages
+- id: Are you sure?
+  translation: Are you sure? This action cannot be reversed!
+- id: You dont have permission
+  translation: You don't have permission for this action!
+- id: Oops! Manipulated request
+  translation: OOPS! Manipulated Request! Who are you?
+
+# Common error messages related to UART
+- id: "Internal error: No transaction"
+  translation: "Internal error: No transaction"
+- id: "Internal error: Validation failed"
+  translation: "Internal error: Validation failed"
+- id: "Invalid user: Email is not provided"
+  translation: "Invalid user: Email is not provided"
+- id: "Invalid user: Invalid user ID"
+  translation: "Invalid user: Invalid user ID"
+- id: "Invalid user: You have no access permission"
+  translation: "Invalid user: You have no access permission"
+
+# Common words
+- id: Accept
+  translation: Accept
+- id: Active
+  translation: Active
+- id: Add
+  translation: Add
+- id: Admin
+  translation: Admin
+- id: Admins
+  translation: Admins
+- id: App
+  translation: App
+- id: Apps
+  translation: Apps
+- id: Cancel
+  translation: Cancel
+- id: Category
+  translation: Category
+- id: Categories
+  translation: Categories
+- id: Close
+  translation: Close
+- id: Code
+  translation: Code
+- id: Codes
+  translation: Codes
+- id: Content
+  translation: Content
+- id: Contents
+  translation: Contents
+- id: Credential
+  translation: Credential
+- id: Credentials
+  translation: Credentials
+- id: Dashboard
+  translation: Dashboard
+- id: Dashboards
+  translation: Dashboards
+- id: Date
+  translation: Date
+- id: Description
+  translation: Description
+- id: Descriptions
+  translation: Descriptions
+- id: Delete
+  translation: Delete
+- id: Dismiss
+  translation: Dismiss
+- id: Docs
+  translation: Docs
+- id: Document
+  translation: Document
+- id: Documents
+  translation: Documents
+- id: Edit
+  translation: Edit
+- id: Email
+  translation: Email
+- id: Emails
+  translation: Emails
+- id: Event
+  translation: Event
+- id: Events
+  translation: Events
+- id: Member
+  translation: Member
+- id: Members
+  translation: Members
+- id: Membership
+  translation: Membership
+- id: Message
+  translation: Message
+- id: Messages
+  translation: Messages
+- id: Meta
+  translation: Meta
+- id: Method
+  translation: Method
+- id: Name
+  translation: Name
+- id: Names
+  translation: Names
+- id: OK
+  translation: OK
+- id: Owner
+  translation: Owner
+- id: Owners
+  translation: Owners
+- id: Priority
+  translation: Priority
+- id: Profile
+  translation: Profile
+- id: Profiles
+  translation: Profiles
+- id: Provider
+  translation: Provider
+- id: Providers
+  translation: Providers
+- id: Rank
+  translation: Rank
+- id: Request
+  translation: Request
+- id: Requests
+  translation: Requests
+- id: Resource
+  translation: Resource
+- id: Resources
+  translation: Resources
+- id: Revoke
+  translation: Revoke
+- id: Role
+  translation: Role
+- id: Roles
+  translation: Roles
+- id: Save
+  translation: Save
+- id: Sender
+  translation: Sender
+- id: Service
+  translation: Service
+- id: Services
+  translation: Services
+- id: Setting
+  translation: Setting
+- id: Settings
+  translation: Settings
+- id: Since
+  translation: Since
+- id: Status
+  translation: Status
+- id: Subject
+  translation: Subject
+- id: Subjects
+  translation: Subjects
+- id: Tag
+  translation: Tag
+- id: Tags
+  translation: Tags
+- id: Team
+  translation: Team
+- id: Teams
+  translation: Teams
+- id: Type
+  translation: Type
+- id: Update
+  translation: Update
+- id: User id
+  translation: User ID
+- id: Value
+  translation: Value
+
+# built in error message of buffalo
+- id: no transaction found
+  translation: no transaction found

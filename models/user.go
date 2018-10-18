@@ -39,10 +39,10 @@ func (u Users) String() string {
 // Validate gets run every time you call a "pop.Validate*"
 func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	if u.Email == "" {
-		return nil, errors.New("invalid.user..email.is.not.provided")
+		return nil, errors.New("Invalid user: Email is not provided")
 	}
 	if u.ID == uuid.Nil {
-		return nil, errors.New("invalid.user..invalid.user.id")
+		return nil, errors.New("Invalid user: Invalid user ID")
 	}
 	return validate.Validate(
 		&validators.UUIDIsPresent{Field: u.ID, Name: "ID"},

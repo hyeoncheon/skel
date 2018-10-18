@@ -1,0 +1,198 @@
+
+# Login & Authentication
+- id: Login
+  translation: 로그인
+- id: Logout
+  translation: 로그아웃
+- id: Login required
+  translation: 로그인해야 합니다.
+- id: Staff only
+  translation: 담당자만 접근할 수 있습니다!
+- id: Welcome back! I missed you
+  translation: 반갑습니다! 기다리고 있었어요
+- id: You have been successfully logged out
+  translation: 정상적으로 로그아웃 되었습니다
+
+# Related to Models
+- id: Created at
+  translation: 생성
+- id: Modified at
+  translation: 변경
+- id: Updated at
+  translation: 갱신
+
+# Common dialog messages
+- id: Are you sure?
+  translation: 확실합니까? 이 동작은 되돌릴 수 없습니다!
+- id: You dont have permission
+  translation: 이 작업을 진행할 권한이 없습니다!
+- id: Oops! Manipulated request
+  translation: 이런! 변조된 접근이군요! 누구시죠?
+
+# Common error messages related to UART
+- id: "Internal error: No transaction"
+  translation: "시스템 오류: 트랜잭션을 찾을 수 없습니다"
+- id: "Internal error: Validation failed"
+  translation: "시스템 오류: 신원확인이 되지 않습니다"
+- id: "Invalid user: Email is not provided"
+  translation: "비인가 사용자: 메일주소가 없습니다"
+- id: "Invalid user: Invalid user ID"
+  translation: "비인가 사용자: 잘못된 사용자 ID 입니다"
+- id: "Invalid user: You have no access permission"
+  translation: "비인가 사용자: 권한이 없습니다"
+
+# Common words
+- id: Accept
+  translation: Accept
+- id: Active
+  translation: Active
+- id: Add
+  translation: Add
+- id: Admin
+  translation: Admin
+- id: Admins
+  translation: Admins
+- id: App
+  translation: App
+- id: Apps
+  translation: Apps
+- id: Cancel
+  translation: Cancel
+- id: Category
+  translation: Category
+- id: Categories
+  translation: Categories
+- id: Close
+  translation: Close
+- id: Code
+  translation: Code
+- id: Codes
+  translation: Codes
+- id: Content
+  translation: Content
+- id: Contents
+  translation: Contents
+- id: Credential
+  translation: Credential
+- id: Credentials
+  translation: Credentials
+- id: Dashboard
+  translation: Dashboard
+- id: Dashboards
+  translation: Dashboards
+- id: Date
+  translation: Date
+- id: Description
+  translation: Description
+- id: Descriptions
+  translation: Descriptions
+- id: Delete
+  translation: Delete
+- id: Dismiss
+  translation: Dismiss
+- id: Docs
+  translation: Docs
+- id: Document
+  translation: Document
+- id: Documents
+  translation: Documents
+- id: Edit
+  translation: Edit
+- id: Email
+  translation: Email
+- id: Emails
+  translation: Emails
+- id: Event
+  translation: Event
+- id: Events
+  translation: Events
+- id: Member
+  translation: Member
+- id: Members
+  translation: Members
+- id: Membership
+  translation: Membership
+- id: Message
+  translation: Message
+- id: Messages
+  translation: Messages
+- id: Meta
+  translation: Meta
+- id: Method
+  translation: Method
+- id: Name
+  translation: Name
+- id: Names
+  translation: Names
+- id: OK
+  translation: OK
+- id: Owner
+  translation: Owner
+- id: Owners
+  translation: Owners
+- id: Priority
+  translation: Priority
+- id: Profile
+  translation: Profile
+- id: Profiles
+  translation: Profiles
+- id: Provider
+  translation: Provider
+- id: Providers
+  translation: Providers
+- id: Rank
+  translation: Rank
+- id: Request
+  translation: Request
+- id: Requests
+  translation: Requests
+- id: Resource
+  translation: Resource
+- id: Resources
+  translation: Resources
+- id: Revoke
+  translation: Revoke
+- id: Role
+  translation: Role
+- id: Roles
+  translation: Roles
+- id: Save
+  translation: Save
+- id: Sender
+  translation: Sender
+- id: Service
+  translation: Service
+- id: Services
+  translation: Services
+- id: Setting
+  translation: Setting
+- id: Settings
+  translation: Settings
+- id: Since
+  translation: Since
+- id: Status
+  translation: Status
+- id: Subject
+  translation: Subject
+- id: Subjects
+  translation: Subjects
+- id: Tag
+  translation: Tag
+- id: Tags
+  translation: Tags
+- id: Team
+  translation: Team
+- id: Teams
+  translation: Teams
+- id: Type
+  translation: Type
+- id: Update
+  translation: Update
+- id: User id
+  translation: User ID
+- id: Value
+  translation: Value
+
+# built in error message of buffalo
+- id: no transaction found
+  translation: no transaction found

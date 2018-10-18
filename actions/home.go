@@ -14,6 +14,6 @@ func HomeHandler(c buffalo.Context) error {
 
 func LogoutHandler(c buffalo.Context) error {
 	destroySession(c)
-	c.Flash().Add("success", "you.have.been.successfully.logged.out")
+	c.Flash().Add("success", t(c, "You have been successfully logged out"))
 	return c.Redirect(http.StatusTemporaryRedirect, "/")
 }
