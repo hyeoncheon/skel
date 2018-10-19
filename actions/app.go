@@ -15,10 +15,14 @@ import (
 	"github.com/hyeoncheon/skel/models"
 )
 
-var ENV = envy.Get("GO_ENV", "development")
-var app *buffalo.App
-var T *i18n.Translator
+// global variables
+var (
+	ENV = envy.Get("GO_ENV", "development")
+	app *buffalo.App
+	T   *i18n.Translator
+)
 
+// App is the root of the application
 func App() *buffalo.App {
 	if app == nil {
 		app = buffalo.New(buffalo.Options{

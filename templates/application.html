@@ -3,19 +3,22 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title><%= t("APP") %></title>
+		<title><%= t("Skel") %></title>
 		<%= stylesheetTag("application.css") %>
 		<%= stylesheetTag("override.css") %>
 		<meta name="csrf-param" content="authenticity_token" />
 		<meta name="csrf-token" content="<%= authenticity_token %>" />
-		<link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
+		<link rel="icon" href="<%= assetPath("images/hyeoncheon-icon.png") %>">
 		<%= javascriptTag("application.js") %>
 	</head>
 	<body>
 
 	<!-- ---- layout: title-bar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-		<a class="navbar-brand" href="/"><%= t("APP") %></a>
+		<a class="navbar-brand" href="/">
+			<img src="<%= assetPath("images/hyeoncheon-icon.png") %>"
+				class="d-inline-block" alt="">
+			<%= t("Skel") %></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav"
 			aria-controls="navbarNav"

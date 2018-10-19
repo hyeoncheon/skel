@@ -41,10 +41,32 @@
 - id: "Invalid user: You have no access permission"
   translation: "Invalid user: You have no access permission"
 
-- id: visit.uart.to.manage.your.details
+# SKEL's built-in names
+- id: Skel
+  translation: Skel
+
+# SKEL's default user interface messages - users
+- id: profile.header.popup.skel
   translation: Visit UART to manage your details
-- id: your.information.and.activities
+- id: profile.header.description.skel
   translation: Your information and activities
+
+# SKEL's default user interface messages - users
+- id: users.header.popup.skel
+  translation: List of users
+- id: users.header.description.skel
+  translation:
+    one: "Total: {{.Count}} User"
+    other: "Total: {{.Count}} Users"
+- id: user.header.popup.skel
+  translation: User's information and activities
+- id: user.header.description.skel
+  translation: "{{.posts_count}} posts and {{.activities_count}} activities"
+- id: first.met
+  translation: Registered
+- id: last.seen
+  translation: Last Login
+
 
 # Common words
 - id: Accept
@@ -55,12 +77,16 @@
   translation: Add
 - id: Admin
   translation: Admin
-- id: Admins
-  translation: Admins
+- id: Administrator
+  translation: Administrator
+- id: Administrators
+  translation: Administrators
 - id: App
   translation: App
 - id: Apps
   translation: Apps
+- id: Back
+  translation: Back
 - id: Cancel
   translation: Cancel
 - id: Category
@@ -107,6 +133,10 @@
   translation: Email
 - id: Emails
   translation: Emails
+- id: Email Address
+  translation: Email Address
+- id: Email Addresses
+  translation: Email Addresses
 - id: Event
   translation: Event
 - id: Events
@@ -115,6 +145,10 @@
   translation: ID
 - id: IDs
   translation: IDs
+- id: Item
+  translation: Item
+- id: Items
+  translation: Items
 - id: Mail
   translation: Mail
 - id: Mails

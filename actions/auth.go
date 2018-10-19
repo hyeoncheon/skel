@@ -35,6 +35,7 @@ func init() {
 	)
 }
 
+// AuthCallback handles callback url of uart OAuth2 and authorize user login
 func AuthCallback(c buffalo.Context) error {
 	oau, err := gothic.CompleteUserAuth(c.Response(), c.Request())
 	if err != nil {

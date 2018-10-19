@@ -1,37 +1,50 @@
-<div class="page-header">
-  <h1>Users</h1>
+<div class="page-header col-12">
+	<h1><%= t("Users") %></h1>
+	<div class="pull-right">
+		<span data-toggle="popover" data-trigger="hover" data-placement="left"
+			data-content="<%=t("users.header.popup.skel") %>">
+			<i class="fa fa-question-circle"></i>
+		</span>
+	</div>
+	<div class="description"><%= t("users.header.description.skel",
+		len(users)) %></div>
 </div>
-<ul class="list-unstyled list-inline">
-  <li><a href="<%= newUsersPath() %>" class="btn btn-primary">Create New User</a></li>
-</ul>
 
-<table class="table table-striped">
-  <thead>
-  <th>Email</th>
-    <th>Name</th>
-    <th>Avatar</th>
-    <th>Roles</th>
-    <th>&nbsp;</th>
-  </thead>
-  <tbody>
-    <%= for (user) in users { %>
-      <tr>
-      <td><%= user.Email %></td>
-        <td><%= user.Name %></td>
-        <td><%= user.Avatar %></td>
-        <td><%= user.Roles %></td>
-        <td>
-          <div class="pull-right">
-            <a href="<%= userPath({ user_id: user.ID }) %>" class="btn btn-info">View</a>
-            <a href="<%= editUserPath({ user_id: user.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= userPath({ user_id: user.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
-          </div>
-        </td>
-      </tr>
-    <% } %>
-  </tbody>
-</table>
+<div class="page-content col-12">
 
-<div class="text-center">
-  <%= paginator(pagination) %>
+	<table class="table table-striped">
+		<thead>
+			<th><%= t("Email") %></th>
+			<th><%= t("Name") %></th>
+			<th><%= t("Roles") %></th>
+			<th><%= t("last.seen") %></th>
+			<th><%= t("first.met") %></th>
+			<th>&nbsp;</th>
+		</thead>
+		<tbody><%= for (user) in users { %>
+			<tr>
+				<td><%= user %></td>
+				<td><%= user.Name %></td>
+				<td><%= user.Roles %></td>
+				<td><%= user.UpdatedAt %></td>
+				<td><%= user.CreatedAt %></td>
+				<td>
+					<div class="pull-right btn-group btn-group-sm">
+						<a class="btn btn-info" href="<%=
+							userPath({ user_id: user.ID }) %>"><%= t("View") %></a>
+						<a class="btn btn-danger" href="<%=
+							userPath({ user_id: user.ID }) %>" data-method="DELETE"
+							data-confirm="<%= t("Are you sure?") %>"><%= t("Delete") %></a>
+					</div>
+				</td>
+			</tr><% } %>
+		</tbody>
+	</table>
+	<div class="text-center">
+		<%= paginator(pagination) %>
+	</div>
+
+</div>
+
+<div class="page-footer col-12">
 </div>

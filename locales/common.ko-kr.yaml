@@ -41,11 +41,32 @@
 - id: "Invalid user: You have no access permission"
   translation: "비인가 사용자: 권한이 없습니다"
 
-# Common UI messages
-- id: visit.uart.to.manage.your.details
+# SKEL's built-in names
+- id: Skel
+  translation: 스켈
+
+# SKEL's default user interface messages - users
+- id: profile.header.popup.skel
   translation: 세부사항을 관리하려거든 UART에 가 보시오
-- id: your.information.and.activities
+- id: profile.header.description.skel
   translation: 귀하에 대한 정보와 귀하의 활동들
+
+# SKEL's default user interface messages - users
+- id: users.header.popup.skel
+  translation: 사용자 목록
+- id: users.header.description.skel
+  translation:
+    one: "전체: {{.Count}} 사용자"
+    other: "전체: {{.Count}} 사용자"
+- id: user.header.popup.skel
+  translation: 사용자 활동 요약
+- id: user.header.description.skel
+  translation: "글 {{.posts_count}} 개와 {{.activities_count}} 개의 활동"
+- id: first.met
+  translation: 등록
+- id: last.seen
+  translation: 최종 로그인
+
 
 # Common words
 - id: Accept
@@ -55,15 +76,19 @@
 - id: Add
   translation: Add
 - id: Admin
-  translation: Admin
-- id: Admins
-  translation: Admins
+  translation: 관리
+- id: Administrator
+  translation: 관리자
+- id: Administrators
+  translation: 관리자
 - id: App
-  translation: App
+  translation: 앱
 - id: Apps
-  translation: Apps
+  translation: 앱
+- id: Back
+  translation: 돌아가기
 - id: Cancel
-  translation: Cancel
+  translation: 취소
 - id: Category
   translation: Category
 - id: Categories
@@ -83,9 +108,9 @@
 - id: Credentials
   translation: Credentials
 - id: Dashboard
-  translation: Dashboard
+  translation: 상황판
 - id: Dashboards
-  translation: Dashboards
+  translation: 상황판
 - id: Date
   translation: Date
 - id: Description
@@ -93,21 +118,25 @@
 - id: Descriptions
   translation: Descriptions
 - id: Delete
-  translation: Delete
+  translation: 삭제
 - id: Dismiss
   translation: Dismiss
 - id: Docs
-  translation: Docs
+  translation: 문서
 - id: Document
-  translation: Document
+  translation: 문서
 - id: Documents
-  translation: Documents
+  translation: 문서
 - id: Edit
-  translation: Edit
+  translation: 편집
 - id: Email
-  translation: Email
+  translation: 메일
 - id: Emails
-  translation: Emails
+  translation: 메일
+- id: Email Address
+  translation: 메일 주소
+- id: Email Addresses
+  translation: 메일 주소
 - id: Event
   translation: Event
 - id: Events
@@ -116,10 +145,14 @@
   translation: ID
 - id: IDs
   translation: IDs
+- id: Item
+  translation: 아이템
+- id: Items
+  translation: 아이템
 - id: Mail
-  translation: Mail
+  translation: 메일
 - id: Mails
-  translation: Mails
+  translation: 메일
 - id: Member
   translation: Member
 - id: Members
@@ -135,9 +168,9 @@
 - id: Method
   translation: Method
 - id: Name
-  translation: Name
+  translation: 이름
 - id: Names
-  translation: Names
+  translation: 이름
 - id: OK
   translation: OK
 - id: Owner
@@ -147,9 +180,9 @@
 - id: Priority
   translation: Priority
 - id: Profile
-  translation: Profile
+  translation: 프로필
 - id: Profiles
-  translation: Profiles
+  translation: 프로필
 - id: Provider
   translation: Provider
 - id: Providers
@@ -167,9 +200,9 @@
 - id: Revoke
   translation: Revoke
 - id: Role
-  translation: Role
+  translation: 역할
 - id: Roles
-  translation: Roles
+  translation: 역할
 - id: Save
   translation: Save
 - id: Sender
@@ -195,23 +228,23 @@
 - id: Tags
   translation: Tags
 - id: Team
-  translation: Team
+  translation: 팀
 - id: Teams
-  translation: Teams
+  translation: 팀
 - id: Type
   translation: Type
 - id: Update
   translation: Update
 - id: User
-  translation: User
+  translation: 사용자
 - id: Users
-  translation: Users
+  translation: 사용자
 - id: User id
   translation: User ID
 - id: Value
   translation: Value
 - id: View
-  translation: View
+  translation: 보기
 
 # built in error message of buffalo
 - id: no transaction found

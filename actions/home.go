@@ -14,6 +14,7 @@ func HomeHandler(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("index.html"))
 }
 
+// LogoutHandler serves `GET /logout` and clear all session
 func LogoutHandler(c buffalo.Context) error {
 	destroySession(c)
 	c.Flash().Add("success", t(c, "You have been successfully logged out"))

@@ -10,7 +10,7 @@ for lang in $langs; do
   find templates -type f |xargs cat \
   |sed 's/t("/\nt("/g' \
   |grep 't("' \
-  |sed 's/.*t("\([\._A-Za-z0-9]*\)").*/- id: \1Xtranslation: \1/' \
+  |sed 's/.*t("\([^"]*\)".*/- id: \1Xtranslation: \1/' \
   |sed 's/\^ \([^\^]*:[^\^]*\)/\^ "\1"/g;s/\^/:/;s/\^/X/;s/\^/:/' \
   |while read line; do
     id=`echo $line|cut -dX -f1`

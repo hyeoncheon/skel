@@ -1,22 +1,47 @@
-<div class="page-header">
-  <h1>User#Show</h1>
+<div class="page-header col-12">
+	<h1><%= user %></h1>
+	<div class="pull-right">
+		<span data-toggle="popover" data-trigger="hover" data-placement="left"
+			data-content="<%=t("user.header.popup.skel") %>">
+			<i class="fa fa-question-circle"></i>
+		</span>
+	</div>
+	<div class="description"><%= t("user.header.description.skel",
+		{posts_count: 0, activities_count: 0}) %></div>
 </div>
 
-<ul class="list-unstyled list-inline">
-  <li class="list-inline-item"><a href="<%= usersPath() %>" class="btn btn-info">Back to all Users</a></li>
-  <li class="list-inline-item"><a href="<%= editUserPath({ user_id: user.ID })%>" class="btn btn-warning">Edit</a></li>
-  <li class="list-inline-item"><a href="<%= userPath({ user_id: user.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
-</ul>
+<div class="page-content col-12">
 
-<p>
-  <strong>Email</strong>: <%= user.Email %>
-</p>
-<p>
-  <strong>Name</strong>: <%= user.Name %>
-</p>
-<p>
-  <strong>Avatar</strong>: <%= user.Avatar %>
-</p>
-<p>
-  <strong>Roles</strong>: <%= user.Roles %>
-</p>
+	<table class="table table-striped">
+		<thead>
+			<th><%= t("Email") %></th>
+			<th><%= t("Name") %></th>
+			<th><%= t("Roles") %></th>
+			<th><%= t("last.seen") %></th>
+			<th><%= t("first.met") %></th>
+			<th>&nbsp;</th>
+		</thead>
+		<tbody><%= for (user) in [user] { %>
+			<tr>
+				<td><%= user %></td>
+				<td><%= user.Name %></td>
+				<td><%= user.Roles %></td>
+				<td><%= user.UpdatedAt %></td>
+				<td><%= user.CreatedAt %></td>
+				<td>
+					<div class="pull-right btn-group btn-group-sm">
+						<a class="btn btn-secondary" href="<%=
+							usersPath() %>"><%= t("Back") %></a>
+						<a class="btn btn-danger" href="<%=
+							userPath({ user_id: user.ID }) %>" data-method="DELETE"
+							data-confirm="<%= t("Are you sure?") %>"><%= t("Delete") %></a>
+					</div>
+				</td>
+			</tr><% } %>
+		</tbody>
+	</table>
+
+</div>
+
+<div class="page-footer col-12">
+</div>
