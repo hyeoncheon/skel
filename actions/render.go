@@ -5,6 +5,7 @@ import (
 
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/packr"
+	"github.com/gobuffalo/uuid"
 )
 
 var r *render.Engine
@@ -31,6 +32,25 @@ func init() {
 				default:
 					return template.HTML(`<i class="fa fa-` + s + `"></i>`)
 				}
+			},
+			"trunc": func(t interface{}, args ...int) string {
+				length := 20
+				var s string
+				switch t.(type) {
+				case string:
+					s = t.(string)
+				case uuid.UUID:
+					s = t.(uuid.UUID).String()
+					length = 14
+				}
+
+				if len(args) > 0 {
+					length = args[0]
+				}
+				if length > len(s)-4 {
+					return s
+				}
+				return s[0:length] + "..."
 			},
 		},
 	})

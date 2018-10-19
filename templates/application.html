@@ -63,7 +63,7 @@
 					<div class="dropdown-menu dropdown-menu-right"
 						aria-labelledby="navbarUser">
 						<span class="dropdown-item-text"><%= user_name %></span>
-						<span class="dropdown-item-text">ID:<%= user_id %></span>
+						<span class="dropdown-item-text">ID: <%= trunc(user_id) %></span>
 						<a class="dropdown-item" href="/profile"><%= t("Profile") %></a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<%= uart_url %>"><%= t("UART") %></a>
