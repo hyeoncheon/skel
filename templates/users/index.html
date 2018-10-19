@@ -22,16 +22,14 @@
 			<th>&nbsp;</th>
 		</thead>
 		<tbody><%= for (user) in users { %>
-			<tr>
+			<tr class="linked" target="<%= userPath({ user_id: user.ID }) %>">
 				<td><%= user %></td>
 				<td><%= user.Name %></td>
 				<td><%= user.Roles %></td>
 				<td><%= user.UpdatedAt %></td>
 				<td><%= user.CreatedAt %></td>
-				<td>
+				<td class="nolink">
 					<div class="pull-right btn-group btn-group-sm">
-						<a class="btn btn-info" href="<%=
-							userPath({ user_id: user.ID }) %>"><%= t("View") %></a>
 						<a class="btn btn-danger" href="<%=
 							userPath({ user_id: user.ID }) %>" data-method="DELETE"
 							data-confirm="<%= t("Are you sure?") %>"><%= t("Delete") %></a>

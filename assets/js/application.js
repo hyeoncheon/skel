@@ -28,4 +28,9 @@ $(() => {
     }
   });
 
+  // table row with link
+  $('tr.linked > td[class!="nolink"]').click(function() {
+    window.location = $(this).parent().attr('target');
+  });
+
 });
