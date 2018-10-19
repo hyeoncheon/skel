@@ -33,4 +33,19 @@ $(() => {
     window.location = $(this).parent().attr('target');
   });
 
+  // use moment for time fields
+  moment.locale(navigator.language);
+  $('.moment').each(function(i, e) {
+    var format = $(e).attr('form');
+    if (format == undefined) {
+      format = "YYYY-MM-DD hh:mm";
+    }
+    var time = moment($(e).text());
+    var disp = time.format(format);
+    if(moment().diff(time, 'months') < 1) {
+      disp = time.fromNow();
+    }
+    $(e).html('<span title="' + time.format() + '">' + disp + '</span>');
+  });
+
 });

@@ -21,6 +21,7 @@ func authorizeKeeper(next buffalo.Handler) buffalo.Handler {
 func contextMapper(next buffalo.Handler) buffalo.Handler {
 	return func(c buffalo.Context) error {
 		c.Set("uart_url", envy.Get("UART_URL", "/"))
+		c.Set("TIME_FORMAT", "2006-01-02T15:04:05Z07:00")
 		if userID := c.Session().Get("user_id"); userID != nil {
 			user := getCurrentUser(c)
 			c.Set("current_user", user)

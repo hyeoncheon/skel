@@ -40,7 +40,11 @@ const configurator = {
   plugins() {
     var plugins = [
       new CleanObsoleteChunks(),
-      new Webpack.ProvidePlugin({$: "jquery",jQuery: "jquery"}),
+      new Webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        moment: "moment"
+      }),
       new MiniCssExtractPlugin({filename: "[name].[contenthash].css"}),
       new CopyWebpackPlugin([{from: "./assets",to: ""}], {copyUnmodified: true,ignore: ["css/**", "js/**", "src/**"] }),
       new Webpack.LoaderOptionsPlugin({minimize: true,debug: false}),
