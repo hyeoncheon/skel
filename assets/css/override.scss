@@ -104,8 +104,8 @@ table.table {
 }
 
 
-//* custom widgets
-.cust-img-profile {
+//* hyeoncheon custom widgets
+.hc-img-profile {
 	width: $nav-icon-size;
 	border-radius: $nav-icon-size / 3;
 }
@@ -159,6 +159,9 @@ table.table {
 		}
 		img {
 			margin: ($font-size - $nav-icon-size) / 2 0;
+		}
+		&.hc-badge .fa-empire {
+			color: orange;
 		}
 	}
 	.dropdown-item {
