@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1>Doc#Show</h1>
+</div>
+
+<ul class="list-unstyled list-inline">
+  <li class="list-inline-item"><a href="<%= docsPath() %>" class="btn btn-info">Back to all Docs</a></li>
+  <li class="list-inline-item"><a href="<%= editDocPath({ doc_id: doc.ID })%>" class="btn btn-warning">Edit</a></li>
+  <li class="list-inline-item"><a href="<%= docPath({ doc_id: doc.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</ul>
+
+<p>
+  <strong>Type</strong>: <%= doc.Type %>
+</p>
+<p>
+  <strong>Category</strong>: <%= doc.Category %>
+</p>
+<p>
+  <strong>Title</strong>: <%= doc.Title %>
+</p>
+<p>
+  <strong>Content</strong>: <%= doc.Content %>
+</p>
+<p>
+  <strong>Permalink</strong>: <%= doc.Permalink %>
+</p>
+<p>
+  <strong>Lang</strong>: <%= doc.Lang %>
+</p>
+<p>
+  <strong>AccessRank</strong>: <%= doc.AccessRank %>
+</p>
+<p>
+  <strong>IsPublic</strong>: <%= doc.IsPublic %>
+</p>
+<p>
+  <strong>IsPublished</strong>: <%= doc.IsPublished %>
+</p>
+<p>
+  <strong>AuthorID</strong>: <%= doc.AuthorID %>
+</p>
+<p>
+  <strong>ParentID</strong>: <%= doc.ParentID %>
+</p>

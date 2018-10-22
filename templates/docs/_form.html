@@ -1,0 +1,12 @@
+<%= f.InputTag("Type") %>
+<%= f.InputTag("Category") %>
+<%= f.InputTag("Title") %>
+<%= f.TextAreaTag("Content", {rows: 10}) %>
+<%= f.InputTag("Permalink") %>
+<%= f.InputTag("Lang") %>
+<%= f.InputTag("AccessRank") %>
+<%= f.CheckboxTag("IsPublic", {unchecked: false}) %>
+<%= f.CheckboxTag("IsPublished", {unchecked: false}) %>
+<%= f.InputTag("AuthorID") %>
+<%= f.InputTag("ParentID") %>
+<button class="btn btn-success" role="submit">Save</button>

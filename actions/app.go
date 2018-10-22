@@ -52,6 +52,8 @@ func App() *buffalo.App {
 
 		app.GET("/profile", ProfileShow)
 
+		app.Resource("/docs", DocsResource{})
+
 		// resources for administrators
 		u := app.Resource("/users", UsersResource{})
 		u.Use(adminKeeper)

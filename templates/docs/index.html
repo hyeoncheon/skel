@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h1>Docs</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li><a href="<%= newDocsPath() %>" class="btn btn-primary">Create New Doc</a></li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>Type</th>
+    <th>Category</th>
+    <th>Title</th>
+    <th>Permalink</th>
+    <th>Lang</th>
+    <th>AccessRank</th>
+    <th>IsPublic</th>
+    <th>IsPublished</th>
+    <th>AuthorID</th>
+    <th>ParentID</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (doc) in docs { %>
+      <tr>
+      <td><%= doc.Type %></td>
+        <td><%= doc.Category %></td>
+        <td><%= doc.Title %></td>
+        <td><%= doc.Permalink %></td>
+        <td><%= doc.Lang %></td>
+        <td><%= doc.AccessRank %></td>
+        <td><%= doc.IsPublic %></td>
+        <td><%= doc.IsPublished %></td>
+        <td><%= doc.AuthorID %></td>
+        <td><%= doc.ParentID %></td>
+        <td>
+          <div class="pull-right">
+            <a href="<%= docPath({ doc_id: doc.ID }) %>" class="btn btn-info">View</a>
+            <a href="<%= editDocPath({ doc_id: doc.ID }) %>" class="btn btn-warning">Edit</a>
+            <a href="<%= docPath({ doc_id: doc.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>

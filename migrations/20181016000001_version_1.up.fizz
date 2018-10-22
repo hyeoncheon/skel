@@ -2,3 +2,18 @@ create_table("users") {
 	t.Column("id", "uuid", {"primary": true})
 	t.Column("email", "string", {})
 }
+
+create_table("docs") {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("type", "string", {})
+	t.Column("category", "string", {})
+	t.Column("title", "string", {})
+	t.Column("content", "text", {})
+	t.Column("permalink", "string", {})
+	t.Column("lang", "string", {})
+	t.Column("access_rank", "integer", {})
+	t.Column("is_public", "bool", {})
+	t.Column("is_published", "bool", {})
+	t.Column("author_id", "uuid", {})
+	t.Column("parent_id", "uuid", {})
+}

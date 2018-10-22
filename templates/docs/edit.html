@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>Edit Doc</h1>
+</div>
+
+<%= form_for(doc, {action: docPath({ doc_id: doc.ID }), method: "PUT"}) { %>
+  <%= partial("docs/form.html") %>
+  <a href="<%= docPath({ doc_id: doc.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<% } %>
