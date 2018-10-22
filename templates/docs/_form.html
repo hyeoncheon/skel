@@ -1,12 +1,22 @@
-<%= f.InputTag("Type") %>
-<%= f.InputTag("Category") %>
-<%= f.InputTag("Title") %>
-<%= f.TextAreaTag("Content", {rows: 10}) %>
-<%= f.InputTag("Permalink") %>
-<%= f.InputTag("Lang") %>
-<%= f.InputTag("AccessRank") %>
-<%= f.CheckboxTag("IsPublic", {unchecked: false}) %>
-<%= f.CheckboxTag("IsPublished", {unchecked: false}) %>
-<%= f.InputTag("AuthorID") %>
+<div class="form-row">
+  <div class="col">
+		<%= f.InputTag("Type", {hide_label: true, placeholder: "Type"}) %>
+  </div>
+  <div class="col">
+		<%= f.InputTag("Category", {hide_label: true, placeholder: "Category"}) %>
+  </div>
+</div>
+<%= f.InputTag("Title", {hide_label: true, placeholder: "Title"}) %>
+<%= f.TextAreaTag("Content", {hide_label: true, placeholder: "Content", rows: 10}) %>
+<%= f.InputTag("Permalink", {hide_label: true, placeholder: "Permalink"}) %>
+<%= f.InputTag("Lang", {hide_label: true, placeholder: "Language"}) %>
+<div class="form-row">
+  <div class="col">
+		<%= f.CheckboxTag("IsPublic", {unchecked: false, label: "Public"}) %>
+  </div>
+  <div class="col">
+		<%= f.CheckboxTag("IsPublished", {unchecked: false, label: "Published"}) %>
+  </div>
+</div>
 <%= f.InputTag("ParentID") %>
 <button class="btn btn-success" role="submit">Save</button>

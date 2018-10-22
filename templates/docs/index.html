@@ -1,49 +1,65 @@
-<div class="page-header">
-  <h1>Docs</h1>
+<div class="page-header col-12">
+	<h1><%= t("Documents") %></h1>
+	<div class="pull-right">
+		<span data-toggle="popover" data-trigger="hover" data-placement="left"
+			data-content="<%=t("docs.header.popup.skel") %>">
+			<i class="fa fa-question-circle"></i>
+		</span>
+	</div>
+	<div class="description"><%= t("docs.header.description.skel",
+		len(docs)) %></div>
 </div>
-<ul class="list-unstyled list-inline">
-  <li><a href="<%= newDocsPath() %>" class="btn btn-primary">Create New Doc</a></li>
-</ul>
 
-<table class="table table-striped">
-  <thead>
-  <th>Type</th>
-    <th>Category</th>
-    <th>Title</th>
-    <th>Permalink</th>
-    <th>Lang</th>
-    <th>AccessRank</th>
-    <th>IsPublic</th>
-    <th>IsPublished</th>
-    <th>AuthorID</th>
-    <th>ParentID</th>
-    <th>&nbsp;</th>
-  </thead>
-  <tbody>
-    <%= for (doc) in docs { %>
-      <tr>
-      <td><%= doc.Type %></td>
-        <td><%= doc.Category %></td>
-        <td><%= doc.Title %></td>
-        <td><%= doc.Permalink %></td>
-        <td><%= doc.Lang %></td>
-        <td><%= doc.AccessRank %></td>
-        <td><%= doc.IsPublic %></td>
-        <td><%= doc.IsPublished %></td>
-        <td><%= doc.AuthorID %></td>
-        <td><%= doc.ParentID %></td>
-        <td>
-          <div class="pull-right">
-            <a href="<%= docPath({ doc_id: doc.ID }) %>" class="btn btn-info">View</a>
-            <a href="<%= editDocPath({ doc_id: doc.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= docPath({ doc_id: doc.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
-          </div>
-        </td>
-      </tr>
-    <% } %>
-  </tbody>
-</table>
+<div class="page-content col-12 hc-docs">
+	<div class="pull-right">
+		<a class="btn btn-sm btn-primary" href="<%=
+			newDocsPath() %>"><%= t("New") %></a>
+	</div><%= if (!current_user.IsAdmin()) { %>
+	<ul><%= for (doc) in docs { %><%
+		partial("docs/row", {doc: doc})
+		%><% } %>
+	</ul><% } else { %>
+	<table class="table table-striped">
+		<thead>
+			<th>Type</th>
+			<th>Category</th>
+			<th>Title</th>
+			<th>Lang</th>
+			<th>Rank</th>
+			<th>Public</th>
+			<th>Published</th>
+			<th>Updated</th>
+			<th>Created</th>
+			<th>&nbsp;</th>
+		</thead>
+		<tbody><%= for (doc) in docs { %>
+			<tr class="linked" target="<%= docPath({ doc_id: doc.Permalink }) %>">
+				<td><%= doc.Type %></td>
+				<td><%= doc.Category %></td>
+				<td title="<%= doc.Author %>"><%= doc.Title %></td>
+				<td><%= doc.Lang %></td>
+				<td><%= doc.AccessRank %></td>
+				<td><%= doc.IsPublic %></td>
+				<td><%= doc.IsPublished %></td>
+				<td class="moment"><%= doc.UpdatedAt %></td>
+				<td class="moment"><%= doc.CreatedAt %></td>
+				<td class="nolink">
+					<div class="pull-right btn-group btn-group-sm">
+						<a class="btn btn-warning" href="<%=
+							editDocPath({ doc_id: doc.ID }) %>"><%= t("Edit") %></a>
+						<a class="btn btn-danger" href="<%=
+							docPath({ doc_id: doc.ID }) %>" data-method="DELETE"
+							data-confirm="<%= t("Are you sure?") %>"><%= t("Delete") %></a>
+					</div>
+				</td>
+			</tr><% } %>
+		</tbody>
+	</table>
 
-<div class="text-center">
-  <%= paginator(pagination) %>
+	<div class="text-center">
+		<%= paginator(pagination) %>
+	</div><% } %>
+</div>
+
+<div class="page-footer col-12">
 </div>

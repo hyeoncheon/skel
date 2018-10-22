@@ -1,0 +1,11 @@
+<%
+let p = doc.Parent() %><%=
+if (p.Title == "") {
+	%><li class="breadcrumb-item"><a href="/docs"><%=
+		t("Docs") %></a></li><%
+} else {
+	%><%=
+	partial("docs/breadcrumb.html", {doc: p})
+	%><li class="breadcrumb-item"><a href="/docs/<%=
+	p.Permalink %>"><%= p.Title %></a></li><%
+} %>

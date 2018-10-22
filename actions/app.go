@@ -52,7 +52,10 @@ func App() *buffalo.App {
 
 		app.GET("/profile", ProfileShow)
 
-		app.Resource("/docs", DocsResource{})
+		dr := DocsResource{}
+		d := app.Group("/docs")
+		d.Resource("/", dr)
+		d.GET("/{lang}/{permalink}/", dr.ShowByLang).Name("docLangPath")
 
 		// resources for administrators
 		u := app.Resource("/users", UsersResource{})

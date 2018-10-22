@@ -1,43 +1,70 @@
-<div class="page-header">
-  <h1>Doc#Show</h1>
+<div class="page-header col-12">
+	<h1><%= doc.Title %></h1>
+	<div class="pull-right">
+		<span data-toggle="popover" data-trigger="hover" data-placement="left"
+			data-content="<%=t("doc.header.popup.skel") %>">
+			<i class="fa fa-question-circle"></i>
+		</span>
+	</div>
+	<div class="description">
+		by <%= doc.Author %>
+		last updated at <%= doc.UpdatedAt %>
+	</div>
 </div>
 
-<ul class="list-unstyled list-inline">
-  <li class="list-inline-item"><a href="<%= docsPath() %>" class="btn btn-info">Back to all Docs</a></li>
-  <li class="list-inline-item"><a href="<%= editDocPath({ doc_id: doc.ID })%>" class="btn btn-warning">Edit</a></li>
-  <li class="list-inline-item"><a href="<%= docPath({ doc_id: doc.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
-</ul>
+<div class="page-content col-12 hc-doc">
+	<div class="hc-doc-path">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb"><%= partial("docs/breadcrumb.html") %></ol>
+		</nav>
+	</div><%=
+	if (doc.AuthorID.String() == user_id.String()) { %>
+	<div class="btn-group btn-group-sm pull-right">
+		<a class="btn btn-warning" href="<%=
+			editDocPath({ doc_id: doc.ID })%>"><%= t("Edit") %></a>
+		<a class="btn btn-sm btn-primary" href="<%=
+			newDocsPath() %>?parent=<%= doc.ID %>"><%= t("Add.Child") %></a>
+		<a class="btn btn-danger" href="<%=
+			docPath({ doc_id: doc.ID })%>" data-method="DELETE"
+			data-confirm="<% t("Are you sure?") %>"><%= t("Delete") %></a>
+	</div><% } %>
 
-<p>
-  <strong>Type</strong>: <%= doc.Type %>
-</p>
-<p>
-  <strong>Category</strong>: <%= doc.Category %>
-</p>
-<p>
-  <strong>Title</strong>: <%= doc.Title %>
-</p>
-<p>
-  <strong>Content</strong>: <%= doc.Content %>
-</p>
-<p>
-  <strong>Permalink</strong>: <%= doc.Permalink %>
-</p>
-<p>
-  <strong>Lang</strong>: <%= doc.Lang %>
-</p>
-<p>
-  <strong>AccessRank</strong>: <%= doc.AccessRank %>
-</p>
-<p>
-  <strong>IsPublic</strong>: <%= doc.IsPublic %>
-</p>
-<p>
-  <strong>IsPublished</strong>: <%= doc.IsPublished %>
-</p>
-<p>
-  <strong>AuthorID</strong>: <%= doc.AuthorID %>
-</p>
-<p>
-  <strong>ParentID</strong>: <%= doc.ParentID %>
-</p>
+	<h1 class="hc-doc-title"><%= doc.Title %></h1>
+	<div class="hc-doc-meta">
+		by <%= doc.Author %>
+		last updated at <%= doc.UpdatedAt %>
+	</div>
+
+	<div class="hc-doc-subdocs hc-docs">
+		<ul><%= for (d) in doc.Children { %><%
+			partial("docs/row", {doc: d}) %><% } %>
+		</ul>
+	</div>
+
+	<div class="hc-doc-content"><%= doc.Content %></div>
+</div>
+
+<div class="page-footer col-12">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Type</th>
+				<th>Category</th>
+				<th>Language</th>
+				<th>Rank</th>
+				<th>Public</th>
+				<th>Published</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><%= doc.Type %></td>
+				<td><%= doc.Category %></td>
+				<td><%= doc.Lang %></td>
+				<td><%= doc.AccessRank %></td>
+				<td><%= doc.IsPublic %></td>
+				<td><%= doc.IsPublished %></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

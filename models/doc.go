@@ -2,12 +2,15 @@ package models
 
 import (
 	"encoding/json"
+	"fmt"
+	"strings"
 	"time"
 
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
+	"github.com/markbates/inflect"
 )
 
 // Doc is a structure for storing document data
@@ -25,13 +28,31 @@ type Doc struct {
 	IsPublic    bool      `json:"is_public" db:"is_public"`
 	IsPublished bool      `json:"is_published" db:"is_published"`
 	AuthorID    uuid.UUID `json:"author_id" db:"author_id"`
+	Author      User      `belongs_to:"user"`
 	ParentID    uuid.UUID `json:"parent_id" db:"parent_id"`
+	Children    Docs      `has_many:"docs" fk_id:"parent_id"`
 }
 
 // String represents doc as a string
 func (d Doc) String() string {
 	jd, _ := json.Marshal(d)
 	return string(jd)
+}
+
+// Parent returns parent document of the doc.
+func (d *Doc) Parent() *Doc {
+	doc := &Doc{}
+	if err := DB.Find(doc, d.ParentID); err != nil {
+		// TODO: log here
+	}
+	return doc
+}
+
+func (d *Doc) permalink() string {
+	s := inflect.Dasherize(d.Title)
+	s = strings.Replace(s, "'", "", -1)
+	s = strings.Replace(s, `"`, "", -1)
+	return s
 }
 
 //*** docs ---
@@ -49,6 +70,13 @@ func (d Docs) String() string {
 
 // Validate gets run every time you call a "pop.Validate*" method.
 func (d *Doc) Validate(tx *pop.Connection) (*validate.Errors, error) {
+	if d.Permalink == "" {
+		d.Permalink = d.permalink()
+	}
+	if d.IsPublic {
+		d.AccessRank = 0
+	}
+	fmt.Printf("----------------- %v\n", d.permalink())
 	return validate.Validate(
 		&validators.StringIsPresent{Field: d.Type, Name: "Type"},
 		&validators.StringIsPresent{Field: d.Category, Name: "Category"},
@@ -56,7 +84,6 @@ func (d *Doc) Validate(tx *pop.Connection) (*validate.Errors, error) {
 		&validators.StringIsPresent{Field: d.Content, Name: "Content"},
 		&validators.StringIsPresent{Field: d.Permalink, Name: "Permalink"},
 		&validators.StringIsPresent{Field: d.Lang, Name: "Lang"},
-		&validators.IntIsPresent{Field: d.AccessRank, Name: "AccessRank"},
 	), nil
 }
 
