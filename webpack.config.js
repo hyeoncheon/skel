@@ -43,6 +43,8 @@ const configurator = {
       new Webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
+        SimpleMDE: "simplemde",
+        hljs: "highlight.js",
         moment: "moment"
       }),
       new MiniCssExtractPlugin({filename: "[name].[contenthash].css"}),

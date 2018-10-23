@@ -48,4 +48,25 @@ $(() => {
     $(e).html('<span title="' + time.format() + '">' + disp + '</span>');
   });
 
+  // SimpleMDE, see https://github.com/sparksuite/simplemde-markdown-editor
+  var simplemde = new SimpleMDE({
+    element: document.getElementById("doc-Content"),
+    autoDownloadFontAwesome: false,
+    autosave: {
+      enabled: true,
+      uniqueId: "doc-content",
+    },
+    lineWrapping: true,
+    renderingConfig: {
+      singleLineBreaks: false,
+      codeSyntaxHighlighting: true,
+    },
+    spellChecker: false,
+  });
+
+  // highlight.js, see https://highlightjs.org/usage/
+  $('.highlight pre').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+
 });
