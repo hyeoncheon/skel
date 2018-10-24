@@ -13,7 +13,7 @@
 <div class="page-content col-12 hc-docs">
 	<div class="pull-right">
 		<a class="btn btn-sm btn-primary" href="<%=
-			newDocsPath() %>"><%= t("New") %></a>
+			newDocsPath() %>"><%= t("new.doc") %></a>
 	</div><%= if (!current_user.IsAdmin()) { %>
 	<ul><%= for (doc) in docs { %><%
 		partial("docs/row", {doc: doc})

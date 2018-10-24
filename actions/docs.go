@@ -26,7 +26,10 @@ func (v DocsResource) List(c buffalo.Context) error {
 	docs := &models.Docs{}
 
 	if !getCurrentUser(c).IsAdmin() {
-		if err := tx.Eager().
+		if err := tx.
+			Eager("Author").
+			Eager("Children.Author").
+			Eager("Children.Children.Author").
 			Where("parent_id = ?", uuid.Nil).All(docs); err != nil {
 			return errors.WithStack(err)
 		}
@@ -51,11 +54,17 @@ func (v DocsResource) Show(c buffalo.Context) error {
 	}
 
 	doc := &models.Doc{}
-	if err := tx.Eager().
+	if err := tx.
+		Eager("Author").
+		Eager("Children.Author").
+		Eager("Children.Children.Author").
 		Where("lang = ?", currentLanguage(c)).
 		Where("permalink = ?", c.Param("doc_id")).
 		First(doc); err != nil {
-		if err := tx.Eager().
+		if err := tx.
+			Eager("Author").
+			Eager("Children.Author").
+			Eager("Children.Children.Author").
 			Where("lang = ?", defaultLanguage).
 			Where("permalink = ?", c.Param("doc_id")).
 			First(doc); err != nil {
@@ -74,7 +83,10 @@ func (v DocsResource) ShowByLang(c buffalo.Context) error {
 	}
 
 	doc := &models.Doc{}
-	if err := tx.Eager().
+	if err := tx.
+		Eager("Author").
+		Eager("Children.Author").
+		Eager("Children.Children.Author").
 		Where("lang = ?", c.Param("lang")).
 		Where("permalink = ?", c.Param("permalink")).
 		First(doc); err != nil {
@@ -134,7 +146,8 @@ func (v DocsResource) Edit(c buffalo.Context) error {
 	}
 
 	doc := &models.Doc{}
-	if err := tx.Find(doc, c.Param("doc_id")); err != nil {
+	if err := tx.Eager("Author").
+		Find(doc, c.Param("doc_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 

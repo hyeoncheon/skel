@@ -86,6 +86,7 @@ table.table {
 		.content {
 			.page-header {
 				background-color: $color-header;
+				padding-top: 0.3rem;
 				border-bottom: 1px solid $color-border;
 				.description {
 					color: $color-gray;
@@ -94,7 +95,7 @@ table.table {
 				}
 			}
 			.page-content {
-				padding-top: 0.4rem;
+				padding-top: 0.5rem;
 				padding-bottom: 2rem;
 			}
 			.page-footer {

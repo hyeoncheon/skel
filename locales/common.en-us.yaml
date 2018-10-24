@@ -42,8 +42,8 @@
   translation: "Invalid user: You have no access permission"
 
 # SKEL's built-in names
-- id: Skel
-  translation: Skel
+- id: UART
+  translation: UART
 
 # SKEL's default user interface messages - users
 - id: profile.header.popup.skel
@@ -66,6 +66,27 @@
   translation: Registered
 - id: last.seen
   translation: Last Login
+
+# SKEL's default user interface messages - docs
+- id: add.child.doc
+  translation: Add Child Doc
+- id: doc.header.popup.skel
+  translation: "{{.help}}"
+- id: doc.edit.header.popup.skel
+  translation: Use markdown for content.
+- id: docs.header.description.skel
+  translation: Read related documents
+- id: docs.header.popup.skel
+  translation: This page shows contents of the documents in three depth.
+    You can check more detailed documents in depth from each topics.
+- id: docs.new.header.description.skel
+  translation: Write new document with markdown format.
+- id: docs.new.header.popup.skel
+  translation: Contents of document should be written with markdown format.
+    If you do not enter Permalink, it will be generated with Title.
+    If you leave Language as blank, it will be filled with browser's language.
+- id: new.doc
+  translation: New Doc
 
 
 # Common words
@@ -171,6 +192,8 @@
   translation: Name
 - id: Names
   translation: Names
+- id: New
+  translation: New
 - id: OK
   translation: OK
 - id: Owner

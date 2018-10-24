@@ -53,7 +53,7 @@ $(() => {
     element: document.getElementById("doc-Content"),
     autoDownloadFontAwesome: false,
     autosave: {
-      enabled: true,
+      enabled: false,
       uniqueId: "doc-content",
     },
     lineWrapping: true,

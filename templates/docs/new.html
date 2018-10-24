@@ -1,5 +1,5 @@
 <div class="page-header col-12">
-	<h1><%= t("New.Document") %></h1>
+	<h1><%= t("new.doc") %></h1>
 	<div class="pull-right">
 		<span data-toggle="popover" data-trigger="hover" data-placement="left"
 			data-content="<%=t("docs.new.header.popup.skel") %>">
@@ -11,9 +11,11 @@
 
 <div class="page-content col-12">
 
-<%= form_for(doc, {action: docsPath(), method: "POST"}) { %>
-  <%= partial("docs/form.html") %>
-  <a href="<%= docsPath() %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<%= form_for(doc, {action: docsPath(), method: "POST"}) { %><%=
+	partial("docs/form.html") %>
+  <a class="btn btn-warning" href="<%=
+		docsPath() %>"
+		data-confirm="<%= t("Are you sure?") %>"><%= t("Cancel") %></a>
 <% } %>
 
 </div>

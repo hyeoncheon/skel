@@ -42,8 +42,8 @@
   translation: "비인가 사용자: 권한이 없습니다"
 
 # SKEL's built-in names
-- id: Skel
-  translation: 스켈
+- id: UART
+  translation: UART
 
 # SKEL's default user interface messages - users
 - id: profile.header.popup.skel
@@ -66,6 +66,28 @@
   translation: 등록
 - id: last.seen
   translation: 최종 로그인
+
+# SKEL's default user interface messages - docs
+- id: add.child.doc
+  translation: 하위 문서 추가
+- id: doc.header.popup.skel
+  translation: "{{.help}}"
+- id: doc.edit.header.popup.skel
+  translation: 본문은 Markdown으로 작성해야 합니다.
+- id: docs.header.description.skel
+  translation: 관련된 문서를 읽어보세요
+- id: docs.header.popup.skel
+  translation: 계층화된 문서의 목차를 세 단계까지만 보여줍니다.
+    보이지 않는 깊은 단계의 문서는 각 부모 문서에서 확인할 수 있습니다.
+- id: docs.new.header.description.skel
+  translation: 새로운 문서를 만듭니다. 본문은 Markdown 형식으로 작성합니다.
+- id: docs.new.header.popup.skel
+  translation: 본문은 Markdown으로 작성하여야 합니다.
+    Permalink를 공백으로 두면 Title을 이용하여 자동으로 만들어집니다.
+    Language를 공백으로 두면 브라우저의 언어설정에 따라 자동으로 채워집니다.
+- id: new.doc
+  translation: 새 문서
+
 
 
 # Common words
@@ -171,6 +193,8 @@
   translation: 이름
 - id: Names
   translation: 이름
+- id: New
+  translation: 신규
 - id: OK
   translation: OK
 - id: Owner
@@ -204,7 +228,7 @@
 - id: Roles
   translation: 역할
 - id: Save
-  translation: Save
+  translation: 저장
 - id: Sender
   translation: Sender
 - id: Service
