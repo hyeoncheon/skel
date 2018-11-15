@@ -56,6 +56,7 @@ func App() *buffalo.App {
 		d := app.Group("/docs")
 		d.Resource("/", dr)
 		d.GET("/{lang}/{permalink}/", dr.ShowByLang).Name("docLangPath")
+		d.PUT("/{doc_id}/publish", dr.Publish)
 
 		// resources for administrators
 		u := app.Resource("/users", UsersResource{})

@@ -23,15 +23,22 @@
 			partial("docs/row", {doc: d}) %><% } %>
 		</ul>
 	</div><%=
-	if (doc.AuthorID.String() == user_id.String()) { %>
+	if (current_user.IsAdmin() || doc.AuthorID.String() == user_id.String()) { %>
 	<div class="btn-group btn-group-sm pull-right">
 		<a class="btn btn-warning" href="<%=
 			editDocPath({ doc_id: doc.ID })%>"><%= t("Edit") %></a>
+		<a class="btn btn-danger" href="<%=
+			docPublishPath({ doc_id: doc.ID })%>" data-method="PUT"><%=
+			if (doc.IsPublished) { %><%=
+				t("Mark as Draft") %><%
+			} else { %><%=
+				t("Mark as Published") %><%
+			} %></a>
 		<a class="btn btn-sm btn-primary" href="<%=
 			newDocsPath() %>?parent=<%= doc.ID %>"><%= t("add.child.doc") %></a>
 		<a class="btn btn-danger" href="<%=
 			docPath({ doc_id: doc.ID })%>" data-method="DELETE"
-			data-confirm="<% t("Are you sure?") %>"><%= t("Delete") %></a>
+			data-confirm="<%= t("Are you sure?") %>"><%= t("Delete") %></a>
 	</div><% } %>
 
 	<div class="hc-doc-content"><%= markdown(doc.Content) %></div>

@@ -19,6 +19,7 @@ $color-header: #f4f4f4;
 $color-border: #ccc;
 $color-gray: #999;
 $color-white: white;
+$color-danger: #ca0000;
 
 
 //* mixins
@@ -28,6 +29,7 @@ $color-white: white;
 .mixin-orange { color: orange; }
 .mixin-gray { color: $color-gray; }
 .mixin-small { font-size: $font-size - 2px; }
+.mixin-danger { color: $color-danger; }
 
 
 //* layout and basic elements
@@ -165,6 +167,15 @@ table.table {
 		a {
 			color: inherit !important;
 		}
+	}
+}
+
+.hc-message-box {
+	border-left: 4px solid black;
+	padding: 1rem 2rem;
+	margin: 1rem 0;
+	&.hc-message-box-danger {
+		border-left-color: $color-danger;
 	}
 }
 

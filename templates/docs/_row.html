@@ -1,9 +1,13 @@
+<%= if (doc.IsPublished || doc.AuthorID.String() == user_id.String()) { %>
 <li><a href="<%= docPath({ doc_id: doc.Permalink }) %>"><%=
-		doc.Title %></a> <span class="mixin-gray">(<%=
-		doc.Type %>/<%=
-		doc.Category %>, by <%= doc.Author %> <span class="moment"><%=
-			doc.UpdatedAt %></span>)</span>
+		doc.Title %></a> <span class="mixin-gray">by <%=
+		doc.Author %> <span class="moment"><%=
+		doc.UpdatedAt %></span> <%=
+		if (!doc.IsPublished) {
+			%> <span class="badge badge-warning">Draft</span><%
+		} %></span>
 <ul><%= for (d) in doc.Children { %><%
 	partial("docs/row", {doc: d}) %><% } %>
 </ul>
 </li>
+<% } %>

@@ -203,3 +203,36 @@ func (v DocsResource) Destroy(c buffalo.Context) error {
 	c.Flash().Add("success", "Doc was destroyed successfully")
 	return c.Render(http.StatusOK, r.Auto(c, doc))
 }
+
+// Publish updates publishing status of the doc. - GET /docs/{doc_id}/publish
+func (v DocsResource) Publish(c buffalo.Context) error {
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return errors.WithStack(errors.New("no transaction found"))
+	}
+
+	doc := &models.Doc{}
+	if err := tx.Find(doc, c.Param("doc_id")); err != nil {
+		return c.Error(http.StatusNotFound, err)
+	}
+
+	user := getCurrentUser(c)
+	if !user.IsAdmin() && doc.AuthorID != user.ID {
+		return c.Render(http.StatusForbidden, r.HTML("violation"))
+	}
+
+	doc.IsPublished = !doc.IsPublished
+
+	verrs, err := tx.ValidateAndUpdate(doc)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	if verrs.HasAny() {
+		c.Set("errors", verrs)
+		return c.Render(http.StatusUnprocessableEntity, r.Auto(c, doc))
+	}
+
+	c.Flash().Add("success", "Doc was updated successfully")
+	return c.Redirect(http.StatusSeeOther, "docLangPath()",
+		map[string]interface{}{"lang": doc.Lang, "permalink": doc.Permalink})
+}
