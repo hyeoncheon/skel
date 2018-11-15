@@ -5,6 +5,9 @@
 		doc.UpdatedAt %></span> <%=
 		if (!doc.IsPublished) {
 			%> <span class="badge badge-warning">Draft</span><%
+		} %><%=
+		if (!doc.IsPublic && !current_user.IsGuest()) {
+			%> <span class="badge badge-info">Public</span><%
 		} %></span>
 <ul><%= for (d) in doc.Children { %><%
 	partial("docs/row", {doc: d}) %><% } %>
