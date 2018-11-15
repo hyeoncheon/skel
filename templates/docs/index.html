@@ -14,9 +14,9 @@
 	<div class="pull-right">
 		<a class="btn btn-sm btn-primary" href="<%=
 			newDocsPath() %>"><%= t("new.doc") %></a>
-	</div><%= if (!current_user.IsAdmin()) { %>
+	</div><%= if (view == "tree") { %>
 	<ul><%= for (doc) in docs { %><%
-		partial("docs/row", {doc: doc})
+		partial("docs/row")
 		%><% } %>
 	</ul><% } else { %>
 	<table class="table table-striped">
@@ -24,10 +24,10 @@
 			<th>Type</th>
 			<th>Category</th>
 			<th>Title</th>
+			<th>Author</th>
 			<th>Lang</th>
 			<th>Rank</th>
-			<th>Public</th>
-			<th>Published</th>
+			<th>Status</th>
 			<th>Updated</th>
 			<th>Created</th>
 			<th>&nbsp;</th>
@@ -36,11 +36,13 @@
 			<tr class="linked" target="<%= docPath({ doc_id: doc.Permalink }) %>">
 				<td><%= doc.Type %></td>
 				<td><%= doc.Category %></td>
-				<td title="<%= doc.Author %>"><%= doc.Title %></td>
+				<td><%= doc.Title %></td>
+				<td><%= doc.Author %></td>
 				<td><%= doc.Lang %></td>
 				<td><%= doc.AccessRank %></td>
-				<td><%= doc.IsPublic %></td>
-				<td><%= doc.IsPublished %></td>
+				<td><%=
+					if (doc.IsPublished) { %>Published<% } else { %>Draft<% } %><%=
+					if (doc.IsPublic) { %>/Public<% } %></td>
 				<td class="moment"><%= doc.UpdatedAt %></td>
 				<td class="moment"><%= doc.CreatedAt %></td>
 				<td class="nolink">

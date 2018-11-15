@@ -55,6 +55,14 @@ func (u *User) HasRole(role string) bool {
 	return false
 }
 
+// IsGuest returns true if the user has only "guest" role.
+func (u *User) IsGuest() bool {
+	if len(u.Roles) == 1 && u.Roles[0] == "guest" {
+		return true
+	}
+	return false
+}
+
 //*** users ---
 
 // Users is an array of users

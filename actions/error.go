@@ -12,6 +12,7 @@ type intError struct {
 
 // error codes. code format is ES + DOmain + Function Code + Error Number
 var (
+	ESTX0001 = intError{"ESD0LS01", "no transaction found"}
 	ESA0SU01 = intError{"ESA0SU01", "no transaction found"}
 	ESA0SU02 = intError{"ESA0SU02", "could not store user"}
 )

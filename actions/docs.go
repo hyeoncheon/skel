@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
 	"github.com/pkg/errors"
@@ -16,30 +17,38 @@ type DocsResource struct {
 	buffalo.Resource
 }
 
+func addPermissionStatement(q *pop.Query, user *models.User) {
+	if user.HasRole("doctor") {
+		q = q.Where("(is_published = ? OR author_id = ?)", true, user.ID)
+	} else {
+		q = q.Where("is_published = ?", true)
+		if user.IsGuest() {
+			q = q.Where("is_public = ?", true)
+		}
+	}
+}
+
 // List gets all Docs. - GET /docs
 func (v DocsResource) List(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
 
 	docs := &models.Docs{}
-
-	if !getCurrentUser(c).IsAdmin() {
-		if err := tx.
-			Eager("Author").
+	q := tx.PaginateFromParams(c.Params()).Eager("Author")
+	user := getCurrentUser(c)
+	if !user.IsAdmin() {
+		c.Set("view", "tree")
+		q = q.
 			Eager("Children.Author").
 			Eager("Children.Children.Author").
-			Where("parent_id = ?", uuid.Nil).All(docs); err != nil {
-			return errors.WithStack(err)
-		}
-		c.Set("pagination", tx.PaginateFromParams(c.Params()).Paginator)
-		return c.Render(http.StatusOK, r.Auto(c, docs))
+			Where("parent_id = ?", uuid.Nil)
+		addPermissionStatement(q, user)
 	}
 
-	q := tx.PaginateFromParams(c.Params())
-	if err := q.Eager().All(docs); err != nil {
-		return errors.WithStack(err)
+	if err := q.All(docs); err != nil {
+		return errors.WithStack(err) // TODO prettify
 	}
 
 	c.Set("pagination", q.Paginator)
@@ -50,24 +59,23 @@ func (v DocsResource) List(c buffalo.Context) error {
 func (v DocsResource) Show(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
+	c.Logger().Debugf("doc.show:%v %v", c.Param("doc_id"), currentLanguage(c))
 
 	doc := &models.Doc{}
-	if err := tx.
-		Eager("Author").
+	permalink := c.Param("doc_id")
+	q := tx.Eager("Author").
 		Eager("Children.Author").
 		Eager("Children.Children.Author").
-		Where("lang = ?", currentLanguage(c)).
-		Where("permalink = ?", c.Param("doc_id")).
-		First(doc); err != nil {
-		if err := tx.
-			Eager("Author").
-			Eager("Children.Author").
-			Eager("Children.Children.Author").
-			Where("lang = ?", defaultLanguage).
-			Where("permalink = ?", c.Param("doc_id")).
-			First(doc); err != nil {
+		Where("permalink = ?", permalink)
+	addPermissionStatement(q, getCurrentUser(c))
+
+	cq := pop.Q(q.Connection)
+	q.Clone(cq)
+	if err := cq.Where("lang = ?", currentLanguage(c)).First(doc); err != nil {
+		c.Logger().Warnf("doc:%v has no %v version", permalink, currentLanguage(c))
+		if err := q.Where("lang = ?", defaultLanguage).First(doc); err != nil {
 			return c.Error(http.StatusNotFound, err)
 		}
 	}
@@ -79,22 +87,21 @@ func (v DocsResource) Show(c buffalo.Context) error {
 func (v DocsResource) ShowByLang(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
+	c.Logger().Debugf("doc.show:%v @%v", c.Param("permalink"), c.Param("lang"))
 
 	doc := &models.Doc{}
-	if err := tx.
-		Eager("Author").
+	permalink := c.Param("permalink")
+	q := tx.Eager("Author").
 		Eager("Children.Author").
 		Eager("Children.Children.Author").
-		Where("lang = ?", c.Param("lang")).
-		Where("permalink = ?", c.Param("permalink")).
-		First(doc); err != nil {
-		c.Flash().Add("success", "redirected")
+		Where("permalink = ?", permalink)
+	addPermissionStatement(q, getCurrentUser(c))
+
+	if err := q.Where("lang = ?", c.Param("lang")).First(doc); err != nil {
 		return c.Redirect(http.StatusTemporaryRedirect, "docPath()",
-			map[string]interface{}{
-				"doc_id": c.Param("permalink"),
-			})
+			render.Data{"doc_id": permalink})
 	}
 
 	return c.Render(http.StatusOK, r.Auto(c, doc))
@@ -118,10 +125,11 @@ func (v DocsResource) Create(c buffalo.Context) error {
 	if doc.Lang == "" {
 		doc.Lang = currentLanguage(c)
 	}
+	// TODO: is permission check required?
 
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
 
 	verrs, err := tx.ValidateAndCreate(doc)
@@ -144,6 +152,7 @@ func (v DocsResource) Edit(c buffalo.Context) error {
 	if !ok {
 		return errors.WithStack(errors.New("no transaction found"))
 	}
+	// TODO: is permission check required?
 
 	doc := &models.Doc{}
 	if err := tx.Eager("Author").
@@ -158,8 +167,9 @@ func (v DocsResource) Edit(c buffalo.Context) error {
 func (v DocsResource) Update(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
+	// TODO: is permission check required?
 
 	doc := &models.Doc{}
 	if err := tx.Find(doc, c.Param("doc_id")); err != nil {
@@ -188,8 +198,9 @@ func (v DocsResource) Update(c buffalo.Context) error {
 func (v DocsResource) Destroy(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
+	// TODO: add permission check!
 
 	doc := &models.Doc{}
 	if err := tx.Find(doc, c.Param("doc_id")); err != nil {
@@ -208,7 +219,7 @@ func (v DocsResource) Destroy(c buffalo.Context) error {
 func (v DocsResource) Publish(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
 
 	doc := &models.Doc{}
