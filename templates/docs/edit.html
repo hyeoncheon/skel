@@ -15,9 +15,12 @@
 <div class="page-content col-12">
 <%= form_for(doc, {action: docPath({ doc_id: doc.ID }), method: "PUT"}) { %><%=
 	partial("docs/form.html") %>
-  <a class="btn btn-warning" href="<%=
-		docPath({ doc_id: doc.Permalink }) %>"
-		data-confirm="<%= t("Are you sure?") %>"><%= t("Cancel") %></a>
+	<div class="buttons pull-right">
+		<a class="btn btn-warning" href="<%=
+			docPath({ doc_id: doc.Permalink }) %>" data-confirm="<%=
+			t("Are you sure?") %>"><%= t("Cancel") %></a>
+		<button class="btn btn-success" role="submit"><%= t("Save") %></button>
+	</div>
 <% } %>
 </div>
 

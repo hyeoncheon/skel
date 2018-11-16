@@ -6,17 +6,30 @@
 		<%= f.InputTag("Category", {hide_label: true, placeholder: "Category"}) %>
   </div>
 </div>
-<%= f.InputTag("Title", {hide_label: true, placeholder: "Title"}) %>
-<%= f.TextAreaTag("Content", {hide_label: true, placeholder: "Content", rows: 10}) %>
-<%= f.InputTag("Permalink", {hide_label: true, placeholder: "Permalink"}) %>
-<%= f.InputTag("Lang", {hide_label: true, placeholder: "Language"}) %>
 <div class="form-row">
-  <div class="col">
-		<%= f.CheckboxTag("IsPublic", {unchecked: false, label: "Public"}) %>
-  </div>
-  <div class="col">
-		<%= f.CheckboxTag("IsPublished", {unchecked: false, label: "Published"}) %>
-  </div>
+	<div class="col-9">
+		<%= f.InputTag("Title", {hide_label: true, placeholder: "Title"}) %>
+	</div>
+	<div class="col form-check abc-checkbox abc-checkbox-info">
+		<input class="form-check-input" id="doc-IsPublic" name="IsPublic" type="checkbox" <%= if (doc.IsPublic) { %> checked<% } %> value="true">
+		<label class="form-check-label" for="doc-IsPublic">Public</label>
+		<input name="IsPublic" type="hidden" value="false"><!-- why this? -->
+	</div>
+	<div class="col form-check abc-checkbox abc-checkbox-warning">
+		<input class="form-check-input" id="doc-IsPublished" name="IsPublished" type="checkbox" <%= if (doc.IsPublished) { %> checked<% } %> value="true">
+		<label class="form-check-label" for="doc-IsPublished">Published</label>
+		<input name="IsPublished" type="hidden" value="false"><!-- why this? -->
+	</div>
+</div>
+<%= f.TextAreaTag("Content", {hide_label: true, placeholder: "Content", rows: 10}) %>
+<div class="form-row">
+	<div class="col-3">
+		<%= f.InputTag("Lang", {hide_label: true, placeholder: "Language"}) %>
+	</div>
+	<div class="col-9">
+		<%= f.InputTag("Permalink", {hide_label: true, placeholder: "Permalink"}) %>
+	</div>
+</div>
+<div class="form-row">
 </div>
 <%= f.InputTag("ParentID") %>
-<button class="btn btn-success" role="submit"><%= t("Save") %></button>

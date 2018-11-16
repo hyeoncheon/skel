@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><%= t("Skel") %></title>
 		<%= stylesheetTag("application.css") %>
-		<%= stylesheetTag("override.css") %>
 		<meta name="csrf-param" content="authenticity_token" />
 		<meta name="csrf-token" content="<%= authenticity_token %>" />
 		<link rel="icon" href="<%= assetPath("images/hyeoncheon-icon.png") %>">
@@ -82,6 +82,17 @@
 <%= partial("flash.html") %>
 <%= yield %>
 			</div>
+		</div>
+	</div>
+
+	<div class="lay-footer"> <!-- ---- layout: layout footer -->
+		<div class="col-12 text-right">
+			<%= t("Skel") %>, the
+			<a href="https://github.com/hyeoncheon/" class="seamless">Hyeoncheon Project</a>
+			Member<br>
+			<a href="https://golang.org/" class="seamless">Golang</a>,
+			<a href="https://gobuffalo.io/" class="seamless">Buffalo</a>,
+			and many FOSSes under the hood<br>
 		</div>
 	</div>
 	</body>

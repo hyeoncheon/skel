@@ -10,14 +10,15 @@
 </div>
 
 <div class="page-content col-12">
-
 <%= form_for(doc, {action: docsPath(), method: "POST"}) { %><%=
 	partial("docs/form.html") %>
-  <a class="btn btn-warning" href="<%=
-		docsPath() %>"
-		data-confirm="<%= t("Are you sure?") %>"><%= t("Cancel") %></a>
+	<div class="buttons pull-right">
+		<a class="btn btn-warning" href="<%=
+			docsPath() %>" data-confirm="<%=
+			t("Are you sure?") %>"><%= t("Cancel") %></a>
+		<button class="btn btn-success" role="submit"><%= t("Save") %></button>
+	</div>
 <% } %>
-
 </div>
 
 <div class="page-footer col-12">
