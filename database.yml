@@ -1,26 +1,38 @@
 development:
   dialect: cockroach
   database: skel_development
-  host: {{envOr "COCKROACH_HOST" "127.0.0.1"  }}
+  host: {{ envOr "COCKROACH_HOST" "localhost"  }}
   port: {{ envOr "COCKROACH_PORT" "26257"  }}
   user: {{ envOr "COCKROACH_USER" "root"  }}
-  password: {{ envOr "COCKROACH_PASSWORD" ""  }}
   pool: 5
+  options:
+    sslmode: require
+    sslrootcert: /opt/cockroach/certs/ca.crt
+    sslcert: /opt/cockroach/certs/client.root.crt
+    sslkey: /opt/cockroach/certs/client.root.key
 
 test:
   dialect: cockroach
   database: skel_test
-  host: {{ envOr "COCKROACH_HOST" "127.0.0.1"  }}
+  host: {{ envOr "COCKROACH_HOST" "localhost"  }}
   port: {{ envOr "COCKROACH_PORT" "26257"  }}
   user: {{ envOr "COCKROACH_USER" "root"  }}
-  password: {{ envOr "COCKROACH_PASSWORD" ""  }}
   pool: 5
+  options:
+    sslmode: require
+    sslrootcert: /opt/cockroach/certs/ca.crt
+    sslcert: /opt/cockroach/certs/client.root.crt
+    sslkey: /opt/cockroach/certs/client.root.key
 
 production:
   dialect: cockroach
   database: skel_production
-  host: {{ envOr "COCKROACH_HOST" "127.0.0.1"  }}
+  host: {{ envOr "COCKROACH_HOST" "localhost"  }}
   port: {{ envOr "COCKROACH_PORT" "26257"  }}
-  user: {{ envOr "COCKROACH_USER" "root"  }}
-  password: {{ envOr "COCKROACH_PASSWORD" ""  }}
+  user: {{ envOr "COCKROACH_USER" "hyeoncheon"  }}
   pool: 5
+  options:
+    sslmode: require
+    sslrootcert: /opt/cockroach/certs/ca.crt
+    sslcert: /opt/cockroach/certs/client.hyeoncheon.crt
+    sslkey: /opt/cockroach/certs/client.hyeoncheon.key
