@@ -2,6 +2,7 @@ package actions
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
@@ -36,15 +37,31 @@ func (v UsersResource) List(c buffalo.Context) error {
 func (v UsersResource) Show(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
+	}
+
+	cu := getCurrentUser(c)
+	id := c.Param("user_id")
+	isProfileView := false
+	if strings.TrimSuffix(c.Request().RequestURI, "/") == "/profile" {
+		id = cu.ID.String()
+		isProfileView = true
 	}
 
 	user := &models.User{}
-	if err := tx.Find(user, c.Param("user_id")); err != nil {
-		return c.Error(http.StatusNotFound, err)
+	if err := tx.Eager().Find(user, id); err != nil {
+		return c.Error(http.StatusNotFound, oops(c, ESU0PS01, err))
 	}
 
-	return c.Render(http.StatusOK, r.Auto(c, user))
+	if isProfileView {
+		user.Name = cu.Name
+		user.Avatar = cu.Avatar
+		user.Roles = cu.Roles
+	} // else get it from UART
+
+	// CHKME: can I use r.Auto() with c.Set("template")?
+	c.Set("user", user)
+	return c.Render(http.StatusOK, r.HTML("users/show"))
 }
 
 // Edit renders a edit form for a User. - GET /users/{user_id}/edit

@@ -29,6 +29,8 @@ func init() {
 				switch s {
 				case "admin":
 					return template.HTML(`<i class="fa fa-empire"></i>`)
+				case "doctor":
+					return template.HTML(`<i class="fa fa-pencil-square"></i>`)
 				default:
 					return template.HTML(`<i class="fa fa-` + s + `"></i>`)
 				}

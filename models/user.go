@@ -21,11 +21,14 @@ type User struct {
 	Name      string    `json:"name" db:"-"`
 	Avatar    string    `json:"avatar" db:"-"`
 	Roles     []string  `json:"roles" db:"-"`
-	Docs      Docs      `has_many:"docs" fk_id:"author_id"`
+	Docs      Docs      `has_many:"docs" fk_id:"author_id" order_by:"permalink"`
 }
 
 // String represents user as a string (currently returns email address)
 func (u User) String() string {
+	if u.Name != "" {
+		return fmt.Sprintf("%s (%s)", u.Name, u.ID.String()[0:6])
+	}
 	return fmt.Sprintf("%s (%s)", u.Email, u.ID.String()[0:6])
 }
 

@@ -12,9 +12,9 @@ type intError struct {
 
 // error codes. code format is ES + DOmain + Function Code + Error Number
 var (
-	ESTX0001 = intError{"ESD0LS01", "no transaction found"}
-	ESA0SU01 = intError{"ESA0SU01", "no transaction found"}
-	ESA0SU02 = intError{"ESA0SU02", "could not store user"}
+	ESTX0001 = intError{"ESTX0001", "no transaction found"}
+	ESA0SU01 = intError{"ESA0SU01", "could not store user"}
+	ESU0PS01 = intError{"ESU0PS01", "could not found the user from datastore"}
 )
 
 func oops(c buffalo.Context, x intError, e error) error {

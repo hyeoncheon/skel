@@ -76,7 +76,7 @@ func validateUARTUser(oau *goth.User) error {
 func setUser(c buffalo.Context, oau *goth.User) (*models.User, error) {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return &models.User{}, oops(c, ESA0SU01, nil)
+		return &models.User{}, oops(c, ESTX0001, nil)
 	}
 
 	var verrs *validate.Errors
@@ -89,7 +89,7 @@ func setUser(c buffalo.Context, oau *goth.User) (*models.User, error) {
 		verrs, err = tx.ValidateAndCreate(user)
 	}
 	if err != nil {
-		return &models.User{}, oops(c, ESA0SU02, err)
+		return &models.User{}, oops(c, ESA0SU01, err)
 	}
 	if verrs.HasAny() {
 		return &models.User{}, eeps(c, "Validation failed")

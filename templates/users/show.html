@@ -1,5 +1,5 @@
 <div class="page-header col-12">
-	<h1><%= user %></h1>
+	<h1><%= t("Profile") %>: <%= user %></h1>
 	<div class="pull-right">
 		<span data-toggle="popover" data-trigger="hover" data-placement="left"
 			data-content="<%=t("user.header.popup.skel") %>">
@@ -7,39 +7,52 @@
 		</span>
 	</div>
 	<div class="description"><%= t("user.header.description.skel",
-		{posts_count: 0, activities_count: 0}) %></div>
+		{posts_count: len(user.Docs), activities_count: 0}) %></div>
 </div>
 
 <div class="page-content col-12">
 
-	<table class="table table-striped">
-		<thead>
-			<th><%= t("Email") %></th>
-			<th><%= t("Name") %></th>
-			<th><%= t("Roles") %></th>
-			<th><%= t("last.seen") %></th>
-			<th><%= t("first.met") %></th>
-			<th>&nbsp;</th>
-		</thead>
-		<tbody><%= for (user) in [user] { %>
-			<tr>
-				<td><%= user %></td>
-				<td><%= user.Name %></td>
-				<td><%= user.Roles %></td>
-				<td class="moment"><%= user.UpdatedAt %></td>
-				<td class="moment"><%= user.CreatedAt %></td>
-				<td>
-					<div class="pull-right btn-group btn-group-sm">
-						<a class="btn btn-secondary" href="<%=
-							usersPath() %>"><%= t("Back") %></a>
-						<a class="btn btn-danger" href="<%=
-							userPath({ user_id: user.ID }) %>" data-method="DELETE"
-							data-confirm="<%= t("Are you sure?") %>"><%= t("Delete") %></a>
-					</div>
-				</td>
-			</tr><% } %>
-		</tbody>
-	</table>
+	<div class="row">
+		<div class="col-lg-6">
+
+			<div class="hc-docs">
+				<h1><%= t("my.documents") %></h1>
+				<ul><%=
+				for (doc) in user.Docs { %><%
+					partial("docs/row") %><%
+				} %>
+				</ul>
+			</div>
+
+		</div><!-- col-lg-6 left -->
+
+		<div class="col-lg-6">
+
+			<div class="">
+				<h1><%= t("basic.info") %></h1><%= if (current_user.IsAdmin()) { %>
+				<div class="pull-right btn-group btn-group-sm">
+					<a class="btn btn-secondary" href="<%=
+						usersPath() %>"><%= t("Back") %></a>
+					<a class="btn btn-danger" href="<%=
+						userPath({ user_id: user.ID }) %>" data-method="DELETE"
+						data-confirm="<%= t("Are you sure?") %>"><%= t("Delete") %></a>
+				</div><% } %>
+				<table class="table">
+					<tr><td><%= t("Name") %></td><td><%= user.Name %></td></tr>
+					<tr><td><%= t("Email") %></td><td><%= user.Email %></td></tr>
+					<tr><td><%= t("Roles") %></td><td><%=
+						for (role) in user.Roles { %><%=
+							role %> <%
+						} %></td></tr>
+					<tr><td><%= t("last.seen") %></td><td class="moment"><%=
+						user.UpdatedAt %></td></tr>
+					<tr><td><%= t("first.met") %></td><td class="moment"><%=
+						user.CreatedAt %></td></tr>
+				</table>
+			</div>
+
+		</div><!-- col-lg-6 right -->
+	</div>
 
 </div>
 

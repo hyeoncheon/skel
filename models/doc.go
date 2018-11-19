@@ -30,7 +30,7 @@ type Doc struct {
 	AuthorID    uuid.UUID `json:"author_id" db:"author_id"`
 	Author      User      `belongs_to:"user"`
 	ParentID    uuid.UUID `json:"parent_id" db:"parent_id"`
-	Children    Docs      `has_many:"docs" fk_id:"parent_id"`
+	Children    Docs      `has_many:"docs" fk_id:"parent_id" order_by:"permalink"`
 }
 
 // String represents doc as a string
@@ -42,8 +42,10 @@ func (d Doc) String() string {
 // Parent returns parent document of the doc.
 func (d *Doc) Parent() *Doc {
 	doc := &Doc{}
-	if err := DB.Find(doc, d.ParentID); err != nil {
-		// TODO: log here
+	if d.ParentID != uuid.Nil {
+		if err := DB.Find(doc, d.ParentID); err != nil {
+			// TODO: log here
+		}
 	}
 	return doc
 }

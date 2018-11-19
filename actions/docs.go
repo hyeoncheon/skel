@@ -47,7 +47,7 @@ func (v DocsResource) List(c buffalo.Context) error {
 		addPermissionStatement(q, user)
 	}
 
-	if err := q.All(docs); err != nil {
+	if err := q.Order("permalink").All(docs); err != nil {
 		return errors.WithStack(err) // TODO prettify
 	}
 

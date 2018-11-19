@@ -336,8 +336,11 @@ a.seamless {
 		img {
 			margin: ($font-size - $nav-icon-size) / 2 0;
 		}
-		&.hc-badge .fa-empire {
-			color: orange;
+		&.hc-badge {
+			color: rgba(255,255,255, 0.6);
+			.fa-empire {
+				color: orange;
+			}
 		}
 	}
 	.dropdown-item-text,

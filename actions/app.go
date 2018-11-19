@@ -50,7 +50,7 @@ func App() *buffalo.App {
 		app.Middleware.Skip(authorizeKeeper, HomeHandler)
 		app.Use(contextMapper)
 
-		app.GET("/profile", ProfileShow)
+		app.GET("/profile", UsersResource{}.Show)
 
 		dr := DocsResource{}
 		d := app.Group("/docs")

@@ -1,4 +1,4 @@
-<%= if (doc.IsPublished || doc.AuthorID.String() == user_id.String()) { %>
+<%= if (current_user.IsAdmin() || doc.IsPublished || doc.AuthorID.String() == user_id.String()) { %>
 <li><a href="<%= docPath({ doc_id: doc.Permalink }) %>"><%=
 		doc.Title %></a> <span class="mixin-gray">by <%=
 		doc.Author %> <span class="moment"><%=
