@@ -17,8 +17,19 @@ type DocsResource struct {
 	buffalo.Resource
 }
 
+func init() {
+	addPermission("GET newDocsPath", "doctor")
+	addPermission("POST docsPath", "doctor")
+	addPermission("GET editDocPath", "doctor")
+	addPermission("PUT docPath", "doctor")
+	addPermission("DELETE docPath", "doctor")
+	addPermission("PUT docPublishPath", "doctor")
+}
+
 func addPermissionStatement(q *pop.Query, user *models.User) {
-	if user.HasRole("doctor") {
+	if user.IsAdmin() {
+		return
+	} else if user.HasRole("doctor") {
 		q = q.Where("(is_published = ? OR author_id = ?)", true, user.ID)
 	} else {
 		q = q.Where("is_published = ?", true)
@@ -125,7 +136,6 @@ func (v DocsResource) Create(c buffalo.Context) error {
 	if doc.Lang == "" {
 		doc.Lang = currentLanguage(c)
 	}
-	// TODO: is permission check required?
 
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -152,7 +162,6 @@ func (v DocsResource) Edit(c buffalo.Context) error {
 	if !ok {
 		return errors.WithStack(errors.New("no transaction found"))
 	}
-	// TODO: is permission check required?
 
 	doc := &models.Doc{}
 	if err := tx.Eager("Author").
@@ -169,7 +178,6 @@ func (v DocsResource) Update(c buffalo.Context) error {
 	if !ok {
 		return oops(c, ESTX0001, nil)
 	}
-	// TODO: is permission check required?
 
 	doc := &models.Doc{}
 	if err := tx.Find(doc, c.Param("doc_id")); err != nil {
@@ -200,7 +208,6 @@ func (v DocsResource) Destroy(c buffalo.Context) error {
 	if !ok {
 		return oops(c, ESTX0001, nil)
 	}
-	// TODO: add permission check!
 
 	doc := &models.Doc{}
 	if err := tx.Find(doc, c.Param("doc_id")); err != nil {
@@ -215,7 +222,7 @@ func (v DocsResource) Destroy(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.Auto(c, doc))
 }
 
-// Publish updates publishing status of the doc. - GET /docs/{doc_id}/publish
+// Publish updates publishing status of the doc. - PUT /docs/{doc_id}/publish
 func (v DocsResource) Publish(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -226,12 +233,6 @@ func (v DocsResource) Publish(c buffalo.Context) error {
 	if err := tx.Find(doc, c.Param("doc_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
-
-	user := getCurrentUser(c)
-	if !user.IsAdmin() && doc.AuthorID != user.ID {
-		return c.Render(http.StatusForbidden, r.HTML("violation"))
-	}
-
 	doc.IsPublished = !doc.IsPublished
 
 	verrs, err := tx.ValidateAndUpdate(doc)
