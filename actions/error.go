@@ -1,6 +1,8 @@
 package actions
 
 import (
+	"net/http"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/pkg/errors"
 )
@@ -29,4 +31,22 @@ func oops(c buffalo.Context, x intError, e error) error {
 func eeps(c buffalo.Context, message string) error {
 	c.Logger().Errorf("service error: %v", message)
 	return errors.Errorf("What's going on? %v", message)
+}
+
+//** error handling with render
+func forbidden(c buffalo.Context, f string, args ...interface{}) error {
+	c.Logger().WithField("category", "security").
+		Errorf("SECURITY! "+f, args...)
+	return c.Render(http.StatusForbidden, r.HTML("errors/violation"))
+}
+
+func e500(c buffalo.Context, f string, args ...interface{}) error {
+	impossible(c, f, args...)
+	return c.Render(http.StatusInternalServerError, r.HTML("errors/500"))
+}
+
+//** internal use only
+func impossible(c buffalo.Context, f string, args ...interface{}) {
+	c.Logger().WithField("category", "bug").
+		Errorf("IMPOSSIBLE! "+f, args...)
 }

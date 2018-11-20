@@ -49,6 +49,7 @@ func App() *buffalo.App {
 		app.Use(authorizeKeeper)
 		app.Middleware.Skip(authorizeKeeper, HomeHandler)
 		app.Use(contextMapper)
+		app.Use(permissionKeeper)
 
 		app.GET("/profile", UsersResource{}.Show)
 

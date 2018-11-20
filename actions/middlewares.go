@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
@@ -37,13 +38,34 @@ func contextMapper(next buffalo.Handler) buffalo.Handler {
 
 func adminKeeper(next buffalo.Handler) buffalo.Handler {
 	return func(c buffalo.Context) error {
-		user := getCurrentUser(c)
-		if !user.IsAdmin() {
-			c.Logger().WithField("category", "security").
-				Errorf("%v tried to access %v", user, c.Request().RequestURI)
-			c.Flash().Add("danger", t(c, "Staff only"))
-			return c.Redirect(http.StatusTemporaryRedirect, "/")
+		cu := getCurrentUser(c)
+		if !cu.IsAdmin() {
+			return forbidden(c, "%v tried to access %v", cu, c.Request().RequestURI)
 		}
 		return next(c)
 	}
 }
+
+func permissionKeeper(next buffalo.Handler) buffalo.Handler {
+	return func(c buffalo.Context) error {
+		cu := getCurrentUser(c)
+		if !cu.IsAdmin() {
+			ri, ok := c.Value("current_route").(buffalo.RouteInfo)
+			if !ok {
+				return e500(c, "incorrect route: %v", c.Value("current_route"))
+			}
+			action := fmt.Sprintf("%v %v", ri.Method, ri.PathName)
+			rp := permissionMap[action]
+			if rp != "" && !cu.HasRole(rp) {
+				return forbidden(c, "%v has no permission %v for %v", cu, rp, action)
+			}
+		}
+		return next(c)
+	}
+}
+
+func addPermission(action, perm string) {
+	permissionMap[action] = perm
+}
+
+var permissionMap = map[string]string{}
