@@ -3,14 +3,14 @@ package models
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
+	"net/url"
 	"time"
 
+	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
-	"github.com/markbates/inflect"
 )
 
 // Doc is a structure for storing document data
@@ -51,10 +51,7 @@ func (d *Doc) Parent() *Doc {
 }
 
 func (d *Doc) permalink() string {
-	s := inflect.Dasherize(d.Title)
-	s = strings.Replace(s, "'", "", -1)
-	s = strings.Replace(s, `"`, "", -1)
-	return s
+	return url.PathEscape(flect.Dasherize(d.Title))
 }
 
 //*** docs ---

@@ -2,7 +2,6 @@ package actions
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
@@ -20,7 +19,7 @@ type UsersResource struct {
 func (v UsersResource) List(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
 
 	users := &models.Users{}
@@ -43,7 +42,7 @@ func (v UsersResource) Show(c buffalo.Context) error {
 	cu := getCurrentUser(c)
 	id := c.Param("user_id")
 	isProfileView := false
-	if strings.TrimSuffix(c.Request().RequestURI, "/") == "/profile" {
+	if c.Request().URL.Path == "/profile/" {
 		id = cu.ID.String()
 		isProfileView = true
 	}
@@ -65,10 +64,11 @@ func (v UsersResource) Show(c buffalo.Context) error {
 }
 
 // Edit renders a edit form for a User. - GET /users/{user_id}/edit
+// CHKME: currently not used.
 func (v UsersResource) Edit(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
 
 	user := &models.User{}
@@ -80,10 +80,11 @@ func (v UsersResource) Edit(c buffalo.Context) error {
 }
 
 // Update changes a User in the DB. - PUT /users/{user_id}
+// CHKME: currently not used.
 func (v UsersResource) Update(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
 
 	user := &models.User{}
@@ -113,7 +114,7 @@ func (v UsersResource) Update(c buffalo.Context) error {
 func (v UsersResource) Destroy(c buffalo.Context) error {
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
-		return errors.WithStack(errors.New("no transaction found"))
+		return oops(c, ESTX0001, nil)
 	}
 
 	user := &models.User{}
