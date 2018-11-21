@@ -28,15 +28,14 @@ type Doc struct {
 	IsPublic    bool      `json:"is_public" db:"is_public"`
 	IsPublished bool      `json:"is_published" db:"is_published"`
 	AuthorID    uuid.UUID `json:"author_id" db:"author_id"`
-	Author      User      `belongs_to:"user"`
+	Author      User      `json:"author" belongs_to:"user"`
 	ParentID    uuid.UUID `json:"parent_id" db:"parent_id"`
-	Children    Docs      `has_many:"docs" fk_id:"parent_id" order_by:"permalink"`
+	Children    Docs      `json:"children" has_many:"docs" fk_id:"parent_id" order_by:"permalink"`
 }
 
 // String represents doc as a string
 func (d Doc) String() string {
-	jd, _ := json.Marshal(d)
-	return string(jd)
+	return d.Title
 }
 
 // Parent returns parent document of the doc.
@@ -84,14 +83,4 @@ func (d *Doc) Validate(tx *pop.Connection) (*validate.Errors, error) {
 		&validators.StringIsPresent{Field: d.Permalink, Name: "Permalink"},
 		&validators.StringIsPresent{Field: d.Lang, Name: "Lang"},
 	), nil
-}
-
-// ValidateCreate gets run every time you call "pop.ValidateAndCreate" method.
-func (d *Doc) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.NewErrors(), nil
-}
-
-// ValidateUpdate gets run every time you call "pop.ValidateAndUpdate" method.
-func (d *Doc) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.NewErrors(), nil
 }
