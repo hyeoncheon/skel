@@ -1,0 +1,29 @@
+development:
+  dialect: cockroach
+  database: skel_development
+  host: {{ envOr "COCKROACH_HOST" "localhost"  }}
+  port: {{ envOr "COCKROACH_PORT" "26257"  }}
+  user: {{ envOr "COCKROACH_USER" "root"  }}
+  pool: 5
+  options:
+    sslmode: disable
+
+test:
+  dialect: cockroach
+  database: skel_test
+  host: {{ envOr "COCKROACH_HOST" "localhost"  }}
+  port: {{ envOr "COCKROACH_PORT" "26257"  }}
+  user: {{ envOr "COCKROACH_USER" "root"  }}
+  pool: 5
+  options:
+    sslmode: disable
+
+production:
+  dialect: cockroach
+  database: skel_production
+  host: {{ envOr "COCKROACH_HOST" "localhost"  }}
+  port: {{ envOr "COCKROACH_PORT" "26257"  }}
+  user: {{ envOr "COCKROACH_USER" "hyeoncheon"  }}
+  pool: 5
+  options:
+    sslmode: disable
