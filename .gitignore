@@ -13,3 +13,4 @@
 /.grifter/
 /.env
 /migrations/schema.sql
+c.out
