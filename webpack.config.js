@@ -1,18 +1,16 @@
 const Webpack = require("webpack");
 const Glob = require("glob");
-const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ManifestPlugin = require("webpack-manifest-plugin");
-const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const LiveReloadPlugin = require('webpack-livereload-plugin');
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const CleanObsoleteChunks = require("webpack-clean-obsolete-chunks");
+const TerserPlugin = require("terser-webpack-plugin");
+const LiveReloadPlugin = require("webpack-livereload-plugin");
 
 const configurator = {
   entries: function(){
     var entries = {
       application: [
-        './node_modules/jquery-ujs/src/rails.js',
         './assets/css/application.scss',
       ],
     }
@@ -39,18 +37,18 @@ const configurator = {
 
   plugins() {
     var plugins = [
-      new CleanObsoleteChunks(),
       new Webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
-        SimpleMDE: "simplemde",
+        EasyMDE: "easymde",
         hljs: "highlight.js",
         moment: "moment"
       }),
       new MiniCssExtractPlugin({filename: "[name].[contenthash].css"}),
-      new CopyWebpackPlugin([{from: "./assets",to: ""}], {copyUnmodified: true,ignore: ["css/**", "js/**", "src/**"] }),
+      new CopyWebpackPlugin({patterns:[{from: "./assets",to: ""}]}, {copyUnmodified: true,ignore: ["css/**", "js/**", "src/**"]}),
       new Webpack.LoaderOptionsPlugin({minimize: true,debug: false}),
-      new ManifestPlugin({fileName: "manifest.json"})
+      new WebpackManifestPlugin({fileName: "manifest.json",publicPath: ""}),
+      new CleanObsoleteChunks()
     ];
 
     return plugins
@@ -64,6 +62,7 @@ const configurator = {
           use: [
             MiniCssExtractPlugin.loader,
             { loader: "css-loader", options: {sourceMap: true}},
+            { loader: "postcss-loader", options: {sourceMap: true}},
             { loader: "sass-loader", options: {sourceMap: true}}
           ]
         },
@@ -71,13 +70,15 @@ const configurator = {
         { test: /\.jsx?$/,loader: "babel-loader",exclude: /node_modules/ },
         { test: /\.(woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,use: "url-loader"},
         { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,use: "file-loader" },
-        { test: require.resolve("jquery"),use: "expose-loader?jQuery!expose-loader?$"},
         { test: /\.go$/, use: "gopherjs-loader"}
       ]
     }
   },
 
   buildConfig: function(){
+    // NOTE: If you are having issues with this not being set "properly", make
+    // sure your GO_ENV is set properly as `buffalo build` overrides NODE_ENV
+    // with whatever GO_ENV is set to or "development".
     const env = process.env.NODE_ENV || "development";
 
     var config = {
@@ -96,17 +97,21 @@ const configurator = {
       return config
     }
 
-    const uglifier = new UglifyJsPlugin({
-      uglifyOptions: {
-        beautify: false,
-        mangle: {keep_fnames: true},
-        output: {comments: false},
-        compress: {}
-      }
+    const terser = new TerserPlugin({
+      terserOptions: {
+        compress: {},
+        mangle: {
+          keep_fnames: true
+        },
+        output: {
+          comments: false,
+        },
+      },
+      extractComments: false,
     })
 
     config.optimization = {
-      minimizer: [uglifier]
+      minimizer: [terser]
     }
 
     return config
