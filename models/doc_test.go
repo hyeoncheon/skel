@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/gobuffalo/uuid"
+	"github.com/gofrs/uuid"
+	"github.com/stretchr/testify/require"
 
 	"github.com/hyeoncheon/skel/models"
-	"github.com/stretchr/testify/require"
 )
 
 func Test_Doc_String(t *testing.T) {
