@@ -1,17 +1,19 @@
 package actions
 
 import (
+	"net/http"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo-pop/v3/pop/popmw"
 	"github.com/gobuffalo/envy"
 	csrf "github.com/gobuffalo/mw-csrf"
 	forcessl "github.com/gobuffalo/mw-forcessl"
-	"github.com/gobuffalo/mw-i18n/v2"
+	i18n "github.com/gobuffalo/mw-i18n/v2"
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
 	"github.com/markbates/goth/gothic"
 	"github.com/unrolled/secure"
-	"net/http"
 
+	"github.com/hyeoncheon/skel/locales"
 	"github.com/hyeoncheon/skel/models"
 	"github.com/hyeoncheon/skel/public"
 )
@@ -76,7 +78,7 @@ func App() *buffalo.App {
 // for more information: https://gobuffalo.io/en/docs/localization
 func translations() buffalo.MiddlewareFunc {
 	var err error
-	if T, err = i18n.New(packr.NewBox("../locales"), "en-US"); err != nil {
+	if T, err = i18n.New(locales.FS(), "en-US"); err != nil {
 		app.Stop(err)
 	}
 	return T.Middleware()

@@ -38,7 +38,10 @@ const configurator = {
     var plugins = [
       new Webpack.ProvidePlugin({
         $: "jquery",
-        jQuery: "jquery"
+        jQuery: "jquery",
+        EasyMDE: "easymde",
+        hljs: "highlight.js",
+        moment: "moment"
       }),
       new MiniCssExtractPlugin({filename: "[name].[contenthash].css"}),
       new CopyWebpackPlugin({

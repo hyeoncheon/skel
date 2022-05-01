@@ -11,9 +11,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@popperjs/core": "^2.0.0",
+    "awesome-bootstrap-checkbox": "^1.0.1",
     "bootstrap": "^5.0.0",
+    "easymde": "^2.16.1",
+    "highlight.js": "^11.5.1",
     "jquery": "^3.6.0",
-    "jquery-ujs": "^1.2.2"
+    "jquery-ujs": "^1.2.2",
+    "moment": "^2.29.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

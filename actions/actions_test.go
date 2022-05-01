@@ -1,9 +1,10 @@
 package actions
 
 import (
+	"os"
 	"testing"
 
-	"github.com/gobuffalo/suite/v3"
+	"github.com/gobuffalo/suite/v4"
 )
 
 type ActionSuite struct {
@@ -11,7 +12,7 @@ type ActionSuite struct {
 }
 
 func Test_ActionSuite(t *testing.T) {
-	action, err := suite.NewActionWithFixtures(App(), packr.NewBox("../fixtures"))
+	action, err := suite.NewActionWithFixtures(App(), os.DirFS("../fixtures"))
 	if err != nil {
 		t.Fatal(err)
 	}
