@@ -3,7 +3,6 @@ package actions
 import (
 	"testing"
 
-	"github.com/gobuffalo/packr/v2"
 	"github.com/gobuffalo/suite/v3"
 )
 

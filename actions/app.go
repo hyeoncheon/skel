@@ -2,17 +2,18 @@ package actions
 
 import (
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/buffalo-pop/v2/pop/popmw"
+	"github.com/gobuffalo/buffalo-pop/v3/pop/popmw"
 	"github.com/gobuffalo/envy"
 	csrf "github.com/gobuffalo/mw-csrf"
 	forcessl "github.com/gobuffalo/mw-forcessl"
-	i18n "github.com/gobuffalo/mw-i18n"
+	"github.com/gobuffalo/mw-i18n/v2"
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
-	"github.com/gobuffalo/packr/v2"
 	"github.com/markbates/goth/gothic"
 	"github.com/unrolled/secure"
+	"net/http"
 
 	"github.com/hyeoncheon/skel/models"
+	"github.com/hyeoncheon/skel/public"
 )
 
 // global variables
@@ -63,7 +64,7 @@ func App() *buffalo.App {
 		u := app.Resource("/users", UsersResource{})
 		u.Use(adminKeeper)
 
-		app.ServeFiles("/", assetsBox)
+		app.ServeFiles("/", http.FS(public.FS()))
 	}
 
 	return app
