@@ -2,7 +2,8 @@ language: go
 dist: bionic
 
 go:
-  - 1.16.x
+  - 1.17.x
+  - 1.18.x
 
 env:
   - GO_ENV=test
@@ -11,7 +12,7 @@ env:
 
 before_install:
   - nvm --version
-  - nvm install 14.17.4
+  - nvm install lts/fermium
   - node --version
   - env
   # cockroachdb
@@ -23,19 +24,16 @@ before_install:
   - ./cockroach start --insecure --background
   - popd
   # buffalo
-  - wget -O - https://github.com/gobuffalo/cli/releases/download/v0.17.5/buffalo_0.17.5_Linux_x86_64.tar.gz |tar zxv
-  - mv buffalo $GOPATH/bin/buffalo
-  - go get -v github.com/gobuffalo/buffalo-pop/v2
-  - ls -l $GOPATH/bin
+  - go install github.com/gobuffalo/cli/cmd/buffalo@latest
   - buffalo version
   - buffalo help
-  - buffalo-pop help
   # goveralls
   #- go install github.com/mattn/goveralls@latest
 
 install:
   - go mod tidy
   - mkdir -p $TRAVIS_BUILD_DIR/public/assets
+  - touch $TRAVIS_BUILD_DIR/public/assets/empty
   - yarn
 
 before_script:
