@@ -23,6 +23,7 @@ $color-border: #ccc;
 $color-gray: #999;
 $color-white: white;
 $color-danger: #ca0000;
+$color-link: #0000a8;
 
 
 //* mixins
@@ -121,6 +122,10 @@ table.table {
 	margin-top: -60px;
 	color: $color-gray;
 	font-size: 0.9em;
+	a {
+		text-decoration: none;
+		color: $color-link;
+	}
 }
 
 //* main layout/page paddings
@@ -132,6 +137,19 @@ table.table {
 	padding: $content-padding-default;
 	padding-top: $content-padding-default;
 	padding-bottom: 30px;
+}
+
+//* login dialog for uart clients
+div#login-dialog {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 30px;
+  margin-top: 60px;
+}
+
+div#login-dialog #login-button {
+  margin-top: 10px;
 }
 
 

@@ -19,8 +19,8 @@
 			<img src="<%= assetPath("images/hyeoncheon-icon.png") %>"
 				class="d-inline-block" alt="">
 			<%= t("Skel") %></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav"
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			data-bs-target="#navbarNav"
 			aria-controls="navbarNav"
 			aria-expanded="false"
 			aria-label="Toggle navigation">
@@ -31,9 +31,10 @@
 				<a class="nav-item nav-link" href="/"><%= t("Dashboard") %></a>
 				<div class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarView"
-						role="button" data-toggle="dropdown"
+						role="button" data-bs-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false"><%= t("View") %></a>
-					<div class="dropdown-menu" aria-labelledby="navbarView">
+					<div class="dropdown-menu dropdown-menu-dark"
+						aria-labelledby="navbarView">
 						<a class="dropdown-item" href="/items"><%= t("Items") %></a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#"><%= t("Teams") %></a>
@@ -43,24 +44,25 @@
 					if (current_user.IsAdmin()) { %>
 				<div class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarAdmin"
-						role="button" data-toggle="dropdown"
+						role="button" data-bs-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false"><%= t("Admin") %></a>
-					<div class="dropdown-menu" aria-labelledby="navbarAdmin">
+					<div class="dropdown-menu dropdown-menu-dark"
+						aria-labelledby="navbarAdmin">
 						<a class="dropdown-item" href="/users"><%= t("Users") %></a>
 						<a class="dropdown-item" href="/teams"><%= t("Teams") %></a>
 					</div>
 				</div><% } %>
 			</div>
-			<div class="navbar-nav mr-auto">
+			<div class="navbar-nav mr-auto" id="member-menu">
 				<span class="nav-item hc-badge"><%=
 					iconize(current_user.Roles[0]) %></span>
 				<div class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarUser"
-						role="button" data-toggle="dropdown"
+						role="button" data-bs-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">
-						<img src="<%= user_icon %>"
-						class="hc-img-profile img-circle"></a>
-					<div class="dropdown-menu dropdown-menu-right"
+						<img src="<%= user_icon %>" class="hc-img-profile img-circle">
+					</a>
+					<div class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
 						aria-labelledby="navbarUser">
 						<span class="dropdown-item-text"><%= user_name %></span>
 						<span class="dropdown-item-text">ID: <%= trunc(user_id) %></span>
@@ -86,7 +88,7 @@
 	</div>
 
 	<div class="lay-footer"> <!-- ---- layout: layout footer -->
-		<div class="col-12 text-right">
+		<div class="col-12 text-end">
 			<%= t("Skel") %>, the
 			<a href="https://github.com/hyeoncheon/" class="seamless">Hyeoncheon Project</a>
 			Member<br>

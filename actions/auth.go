@@ -25,7 +25,7 @@ func init() {
 		os.Getenv("UART_URL"),
 		os.Getenv("UART_KEY"),
 		os.Getenv("UART_SECRET"),
-		fmt.Sprintf("%s%s", App().Host, "/auth/uart/callback"),
+		fmt.Sprintf("%s%s", os.Getenv("HC_URL"), "/auth/uart/callback"),
 		"profile",
 	)
 	uartProvider.SetName("uart")

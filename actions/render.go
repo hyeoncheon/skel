@@ -28,11 +28,11 @@ func init() {
 			"iconize": func(s string) template.HTML {
 				switch s {
 				case "admin":
-					return template.HTML(`<i class="fa fa-empire"></i>`)
+					return template.HTML(`<i class="fab fa-empire"></i>`)
 				case "doctor":
-					return template.HTML(`<i class="fa fa-pencil-square"></i>`)
+					return template.HTML(`<i class="fas fa-pencil-square"></i>`)
 				default:
-					return template.HTML(`<i class="fa fa-` + s + `"></i>`)
+					return template.HTML(`<i class="fas fa-` + s + `"></i>`)
 				}
 			},
 			"trunc": func(t interface{}, args ...int) string {
