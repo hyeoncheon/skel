@@ -1,7 +1,17 @@
 version: 2
+checks:
+  method-lines:
+    config:
+      threshold: 60
 plugins:
   fixme:
     enabled: true
+    config:
+      strings:
+        - FIXME
+        - BUG
+        - HACK
+        - XXX
   gofmt:
     enabled: true
   golint:
